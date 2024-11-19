@@ -1,0 +1,5 @@
+coverage:
+  status:
+    patch:  # Coverage of lines in changes
+      default:
+        threshold: 5%

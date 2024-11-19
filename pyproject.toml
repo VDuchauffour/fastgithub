@@ -1,0 +1,118 @@
+[project]
+name = "fast-github"
+description = "Add your description here"
+readme = "README.md"
+license = { file = "LICENSE" }
+keywords = []
+classifiers = []
+authors = [{ name = "", email = "package@package.com" }]
+requires-python = ">=3.12"
+version = "0.0.1"
+dependencies = [
+    "omegaconf>=2.3.0",
+    "pydantic>=2.9.2",
+    "pygithub>=2.5.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/VDuchauffour/fast-github"
+Documentation = "https://github.com/VDuchauffour/fast-github"
+
+[dependency-groups]
+dev = [
+  "ipython>=8.29.0",
+  "pre-commit>=4.0.1",
+  "pyright>=1.1.389",
+  "pytest>=8.3.3",
+  "pytest-cov>=6.0.0",
+  "ruff>=0.7.4",
+]
+
+[tool.ruff]
+extend-exclude = ["examples/*.py", "setup.py"]
+target-version = "py312"
+force-exclude = true
+line-length = 99
+
+[tool.ruff.lint]
+select = [
+  # pycodestyle
+  "E",
+  "W",
+  # pyflakes
+  "F",
+  # flake8-bandit
+  "S",
+  # pyupgrade
+  "UP",
+  # pep8-naming
+  "N",
+  # isort
+  "I",
+]
+ignore = ["S301", "S311"]
+per-file-ignores = { "__init__.py" = [
+  "E402",
+  "F401",
+  "F403",
+  "F811",
+], "test/**/*.py" = [
+  "S101",
+  "S301",
+  "S311",
+], "tests/**/*.py" = [
+  "S101",
+  "S301",
+  "S311",
+] }
+
+[tool.ruff.lint.pycodestyle]
+ignore-overlong-task-comments = true
+max-doc-length = 99
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.isort]
+known-first-party = ["stonal_*", "stonal_*.*"]
+
+[tool.ruff.format]
+docstring-code-format = true
+preview = true
+
+[tool.yamlfix]
+explicit_start = false
+whitelines = 1
+sequence_style = "block_style"
+
+[tool.pytest.ini_options]
+minversion = "7"
+addopts = "--cov=./src --cov-report=term --cov-report=xml --cov-report=html"
+pythonpath = "src"
+asyncio_mode = "auto"
+markers = ["integration"]
+
+[tool.coverage.run]
+branch = true
+omit = ["*docs*", "*stubs*", "*examples*", "*test*", "*tests*", "*__init__*"]
+
+[tool.coverage.report]
+fail_under = 0
+show_missing = true
+ignore_errors = true
+omit = ["*docs*", "*stubs*", "*examples*", "*test*", "*tests*", "*__init__*"]
+exclude_lines = [
+  "pragma: no cover",
+  "def __repr__",
+  "if self.debug:",
+  "if settings.DEBUG",
+  "raise AssertionError",
+  "raise NotImplementedError",
+  "if 0:",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+  "except ImportError:",
+  "Protocol",
+  "@(abc.)?abstractmethod",
+  "ModuleNotFoundError",
+]

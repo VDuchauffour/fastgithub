@@ -1,0 +1,58 @@
+default_language_version:
+  python: python3.12
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-docstring-first
+      - id: check-xml
+      - id: check-json
+      - id: check-yaml
+      - id: check-toml
+      - id: debug-statements
+      - id: check-executables-have-shebangs
+      - id: check-case-conflict
+      - id: check-added-large-files
+      - id: detect-private-key
+    # Formatter for Json files
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v4.0.0-alpha.8
+    hooks:
+      - id: prettier
+        types:
+          - json
+  - repo: https://github.com/lyz-code/yamlfix
+    rev: 1.17.0
+    hooks:
+      - id: yamlfix
+    # Formatter for Toml files
+  - repo: https://github.com/ComPWA/mirrors-taplo
+    rev: v0.9.3
+    hooks:
+      - id: taplo-format
+  # Formatter for markdown files
+  - repo: https://github.com/executablebooks/mdformat
+    rev: 0.7.19
+    hooks:
+      - id: mdformat
+        args:
+          - --number
+        additional_dependencies:
+          - mdformat-gfm
+          - mdformat-tables
+          - mdformat-frontmatter
+          - mdformat-black
+          - mdformat-shfmt
+  # An extremely fast Python linter, written in Rust
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.7.4
+    hooks:
+      # Run the linter
+      - id: ruff
+        args:
+          - --fix
+          - --exit-non-zero-on-fix
+      # Run the formatter.
+      - id: ruff-format

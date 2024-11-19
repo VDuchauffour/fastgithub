@@ -1,0 +1,29 @@
+# This workflow will enforce description on pull requests.
+name: PR Description Enforcer
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+permissions: write-all
+
+jobs:
+  enforce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dekinderfiets/pr-description-enforcer@0.0.1
+        with:
+          repo-token: ${{ github.token }}
+
+  close-pr:
+    runs-on: ubuntu-latest
+    needs:
+      - enforce
+    if: always() && (needs.enforce.result == 'failure')
+    steps:
+      - uses: peter-evans/close-pull@v3
+        with:
+          comment: Your PR does not appear to follow our pull request guidelines.
+            Please reopen a PR and this time, fill in the PR description.

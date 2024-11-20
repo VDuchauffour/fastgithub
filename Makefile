@@ -2,7 +2,7 @@
 
 # install pre-commit
 pre-commit-install:
-	uvx pre-commit install
+	uv run pre-commit install
 
 # install dependencies
 install: clean pre-commit-install

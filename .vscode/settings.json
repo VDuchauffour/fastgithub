@@ -1,0 +1,38 @@
+{
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "never",
+      "source.organizeImports.ruff": "explicit"
+    }
+  },
+  "python.analysis.diagnosticSeverityOverrides": {
+    "reportGeneralTypeIssues": "warning",
+    "reportArgumentType": "warning"
+  },
+  "ruff.importStrategy": "useBundled",
+  "python.testing.pytestArgs": ["tests"],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/__pycache__": true,
+    "**/.classpath": true,
+    "**/.factorypath": true,
+    "**/.mypy_cache": true,
+    "**/.project": true,
+    "**/.pytest_cache": true,
+    "**/.ruff_cache": true,
+    "**/.settings": true,
+    "**/*.egg-info": true,
+    "**/.coverage": true,
+    "**/.python-version": true,
+    "**/*.pyc": true,
+    "**/.venv": true,
+    "**/htmlcov": true,
+    "build": true,
+    "coverage.xml": true,
+    "node_modules": true
+  }
+}

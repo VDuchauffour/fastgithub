@@ -1,5 +1,5 @@
-name-template: $RESOLVED_VERSION
-tag-template: $RESOLVED_VERSION
+name-template: v$RESOLVED_VERSION
+tag-template: v$RESOLVED_VERSION
 categories:
   - title: 🚀 Features
     labels:
@@ -22,7 +22,7 @@ categories:
       - documentation
       - docs
 change-template: '- $TITLE (#$NUMBER)'
-change-title-escapes: \<*_&   # You can add  # and @ to disable mentions
+change-title-escapes: \<*_& # You can add  # and @ to disable mentions
 version-resolver:
   major:
     labels:

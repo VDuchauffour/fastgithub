@@ -17,7 +17,7 @@ class GithubWebhookHandler:
     def __init__(self, token: str | None = None, unsafe_mode: bool = False) -> None:
         self._token = token or os.environ["GITHUB_TOKEN"]
         self._webhooks = collections.defaultdict(list)
-        self._unsafe_mode = unsafe_mode
+        self._safe_mode = not unsafe_mode
 
     @property
     def token(self) -> str:
@@ -61,7 +61,7 @@ class GithubWebhookHandler:
 
     async def handle(self, request: Request):
         """Handle incoming webhook events from GitHub."""
-        if not self._unsafe_mode:
+        if self._safe_mode:
             await self._safety_checks(request)
 
         event = request.headers.get("X-GitHub-Event")

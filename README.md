@@ -134,3 +134,7 @@ To ensure that you follow the development workflow, please setup the pre-commit 
 ```shell
 uv run pre-commit install
 ```
+
+## Acknowledgements
+
+Initial ideas and designs are inspired by [python-github-webhook](https://github.com/bloomberg/python-github-webhook) and [python-github-bot-api](https://github.com/NiklasRosenstein/python-github-bot-api/)

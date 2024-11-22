@@ -14,7 +14,7 @@ permissions:
 jobs:
   build-and-publish:
     if: startsWith(github.ref, 'refs/tags')
-    name: Build source distribution
+    name: Build and publish
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

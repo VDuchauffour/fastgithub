@@ -86,9 +86,7 @@ from fastgithub.endpoint.webhook_router import webhook_router
 from fastgithub.recipes.github import autocreate_pull_request
 from fastgithub.webhook import GithubWebhookHandler
 
-webhook_handler = GithubWebhookHandler(
-    token="your-secret-token"
-)  # by default os.environ["GITHUB_TOKEN"]
+webhook_handler = GithubWebhookHandler(secret="your-secret")
 
 
 @webhook_handler.listen("push")

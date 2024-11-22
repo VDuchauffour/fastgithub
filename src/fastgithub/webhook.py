@@ -1,27 +1,25 @@
 import collections
 import hashlib
 import hmac
-import os
 from collections.abc import Callable
 from typing import overload
 
 from fastapi import HTTPException, Request
 
 # TODO handle ratelimit github api (as middleware?)
-# TODO fix safe mode
 # TODO recipe helpers + faire class pour recipes  + listen raw function et recipe
 # TODO try except
 
 
 class GithubWebhookHandler:
-    def __init__(self, token: str | None = None, unsafe_mode: bool = False) -> None:
-        self._token = token or os.environ["GITHUB_TOKEN"]
+    def __init__(self, secret: str, unsafe_mode: bool = False) -> None:
+        self._secret = secret
         self._webhooks = collections.defaultdict(list)
         self._safe_mode = not unsafe_mode
 
     @property
-    def token(self) -> str:
-        return self._token
+    def secret(self) -> str:
+        return self._secret
 
     @property
     def webhooks(self) -> dict[str, list[Callable]]:
@@ -42,7 +40,7 @@ class GithubWebhookHandler:
 
         hash_alg, provided_signature = signature.split("=")
         computed_signature = hmac.new(
-            self.token.encode(),
+            self.secret.encode(),
             payload,
             hashlib.new(hash_alg).name,
         ).hexdigest()

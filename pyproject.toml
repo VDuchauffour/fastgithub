@@ -7,9 +7,20 @@ name = "fastgithub"
 description = "A Python library to supercharge your GitHub organization with bots and webhooks. "
 readme = "README.md"
 license = { file = "LICENSE" }
-keywords = []
-classifiers = []
-authors = [{ name = "", email = "package@package.com" }]
+keywords = ["github", "web", "bot", "ci"]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Environment :: Web Environment",
+  "Framework :: FastAPI",
+  "Intended Audience :: Developers",
+]
+authors = [
+  { name = "Vincent Duchauffour", email = "vincent.duchauffour@proton.me" },
+]
 requires-python = ">=3.12"
 version = "0.0.1"
 dependencies = [

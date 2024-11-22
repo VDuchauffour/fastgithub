@@ -1,6 +1,10 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
-name = "fast-github"
-description = "Add your description here"
+name = "fastgithub"
+description = "A Python library to supercharge your GitHub organization with bots and webhooks. "
 readme = "README.md"
 license = { file = "LICENSE" }
 keywords = []
@@ -9,14 +13,14 @@ authors = [{ name = "", email = "package@package.com" }]
 requires-python = ">=3.12"
 version = "0.0.1"
 dependencies = [
-    "omegaconf>=2.3.0",
-    "pydantic>=2.9.2",
-    "pygithub>=2.5.0",
+  "fastapi[standard,standard]>=0.115.5",
+  "pydantic>=2.9.2",
+  "pygithub>=2.5.0",
 ]
 
 [project.urls]
-Homepage = "https://github.com/VDuchauffour/fast-github"
-Documentation = "https://github.com/VDuchauffour/fast-github"
+Homepage = "https://github.com/VDuchauffour/fastgithub"
+Documentation = "https://github.com/VDuchauffour/fastgithub"
 
 [dependency-groups]
 dev = [

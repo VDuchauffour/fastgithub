@@ -2,4 +2,4 @@
 
 from importlib.metadata import version
 
-__version__ = version("fast-github")
+__version__ = version("fastgithub")

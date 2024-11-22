@@ -20,9 +20,6 @@
       <a href="https://github.com/VDuchauffour/fastgithub/actions/workflows/release.yml">
         <img src="https://github.com/VDuchauffour/fastgithub/actions/workflows/release.yml/badge.svg" alt="Release">
       </a>
-      <a href="https://interrogate.readthedocs.io/en/latest/">
-        <img src=".github/assets/badges/interrogate_badge.svg" alt="Interrogate">
-      </a>
       <a href="https://codecov.io/gh/VDuchauffour/fastgithub">
         <img src="https://codecov.io/gh/VDuchauffour/fastgithub/branch/main/graph/badge.svg" alt="Codecov">
       </a>

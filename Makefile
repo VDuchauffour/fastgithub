@@ -51,24 +51,6 @@ lint:
 	uv run ruff check --fix .
 	uv run ruff format .
 
-# run unit tests
-unit-tests: install
-	uv run pytest --collect-only --no-cov -m "not integration"; EXITCODE=$$?; \
-	if [ $$EXITCODE = 0 ]; then uv run pytest -vv -s -m "not integration"; \
-	elif [ $$EXITCODE = 5 ]; then true; \
-	else exit $$EXITCODE; \
-	fi
-
-# prepare integration test
-prepare-integration-tests: install
-
-# run integration tests
-integration-tests: prepare-integration-tests
-	uv run pytest --collect-only --no-cov -m "integration"; EXITCODE=$$?; \
-	if [ $$EXITCODE = 0 ]; then uv run pytest -vv --no-cov -s -m "integration"; \
-	elif [ $$EXITCODE = 5 ]; then true; \
-	else exit $$EXITCODE; \
-	fi
-
-# run all tests
-tests: unit-tests integration-tests
+# test the package
+test: clean-test
+	uv run pytest -vv -s

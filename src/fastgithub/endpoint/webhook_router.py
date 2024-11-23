@@ -3,7 +3,7 @@ from enum import Enum
 
 from fastapi import APIRouter
 
-from fastgithub.webhook import GithubWebhookHandler
+from fastgithub.handler import GithubWebhookHandler
 
 from .helper import _inject_dependencies
 

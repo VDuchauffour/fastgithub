@@ -22,7 +22,7 @@ class GithubWebhookHandler:
 
     @property
     def safe_mode(self) -> bool:
-        return not self.signature_verification
+        return bool(self.signature_verification)
 
     async def handle(self, request: Request):
         """Handle incoming webhook events from GitHub."""

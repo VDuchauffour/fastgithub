@@ -4,7 +4,7 @@ from typing import overload
 
 from fastapi import HTTPException, Request
 
-from fastgithub.signature import SignatureVerification
+from .signature import SignatureVerification
 
 
 class GithubWebhookHandler:

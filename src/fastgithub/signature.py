@@ -25,9 +25,6 @@ class SignatureVerification(ABC):
         Returns:
             bool: True if the signature is valid, otherwise False.
         """
-        if not signature:
-            return False
-
         hash_alg, provided_signature = signature.split("=")
         computed_signature = hmac.new(
             self.secret.encode(),

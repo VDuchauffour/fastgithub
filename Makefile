@@ -52,5 +52,5 @@ lint:
 	uv run ruff format .
 
 # test the package
-test: clean-test
+tests: clean-test
 	uv run pytest -vv -s

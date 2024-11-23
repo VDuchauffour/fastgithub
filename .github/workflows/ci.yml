@@ -57,11 +57,6 @@ jobs:
       - name: Run tests
         run: |
           make tests
-      - name: Upload code coverage as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: html-coverage-report
-          path: htmlcov
       - name: Upload coverage to codecov
         uses: codecov/codecov-action@v4
         with:

@@ -80,11 +80,9 @@ pip install fastgithub
 
 ```python
 from typing import Any
-from fastapi import FastAPI
 import uvicorn
-from fastgithub.endpoint.webhook_router import webhook_router
-from fastgithub.handler import GithubWebhookHandler
-from fastgithub.signature import SignatureVerificationSHA256
+from fastapi import FastAPI
+from fastgithub import GithubWebhookHandler, SignatureVerificationSHA256, webhook_router
 
 signature_verification = SignatureVerificationSHA256(secret="mysecret")
 webhook_handler = GithubWebhookHandler(signature_verification)
@@ -92,7 +90,7 @@ webhook_handler = GithubWebhookHandler(signature_verification)
 
 @webhook_handler.listen("push")
 def hello(data: dict[str, Any]):
-    print(f"Hello from: {data["repository"]}")
+    print(f"Hello from: {data['repository']}")
 
 
 app = FastAPI()
@@ -107,11 +105,11 @@ You can also fill a list of functions for a specific event to the handler:
 
 ```python
 def hello(data: dict[str, Any]):
-    print(f"Hello from: {data["repository"]}")
+    print(f"Hello from: {data['repository']}")
 
 
 def bye(data: dict[str, Any]):
-    print(f"Goodbye from: {data["repository"]}")
+    print(f"Goodbye from: {data['repository']}")
 
 
 webhook_handler.listen("push", [hello, bye])

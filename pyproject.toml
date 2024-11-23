@@ -44,7 +44,7 @@ dev = [
 ]
 
 [tool.ruff]
-extend-exclude = ["examples/*.py", "setup.py"]
+extend-exclude = ["setup.py"]
 target-version = "py312"
 force-exclude = true
 line-length = 99

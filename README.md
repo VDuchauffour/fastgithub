@@ -83,10 +83,11 @@ from typing import Any
 from fastapi import FastAPI
 import uvicorn
 from fastgithub.endpoint.webhook_router import webhook_router
-from fastgithub.recipes.github import autocreate_pull_request
-from fastgithub.webhook import GithubWebhookHandler
+from fastgithub.handler import GithubWebhookHandler
+from fastgithub.signature import SignatureVerificationSHA256
 
-webhook_handler = GithubWebhookHandler(secret="your-secret")
+signature_verification = SignatureVerificationSHA256(secret="mysecret")
+webhook_handler = GithubWebhookHandler(signature_verification)
 
 
 @webhook_handler.listen("push")

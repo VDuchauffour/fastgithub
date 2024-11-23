@@ -131,4 +131,5 @@ exclude_lines = [
   "Protocol",
   "@(abc.)?abstractmethod",
   "ModuleNotFoundError",
+  "...",
 ]

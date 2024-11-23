@@ -1,6 +1,6 @@
 import collections
 from collections.abc import Callable
-from typing import overload
+from typing import Any, overload
 
 from fastapi import HTTPException, Request
 
@@ -40,7 +40,7 @@ class GithubWebhookHandler:
                 raise HTTPException(status_code=400, detail="Error during {event} event!")
         raise HTTPException(status_code=422, detail="No event provided!")
 
-    async def process_event(self, event: str, data: dict) -> bool:
+    async def process_event(self, event: str, data: dict[str, Any]) -> bool:
         """Process the GitHub event. Override this method to handle specific events.
 
         Args:
@@ -59,12 +59,10 @@ class GithubWebhookHandler:
             return True
 
     @overload
-    def listen(self, event: str) -> Callable:
-        pass
+    def listen(self, event: str) -> Callable: ...
 
     @overload
-    def listen(self, event: str, functions: list[Callable]) -> Callable:
-        pass
+    def listen(self, event: str, functions: list[Callable]) -> Callable: ...
 
     def listen(self, event: str, functions: list[Callable] | None = None) -> Callable | None:
         if functions is None:

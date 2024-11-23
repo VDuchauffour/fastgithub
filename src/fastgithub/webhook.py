@@ -6,10 +6,6 @@ from typing import overload
 
 from fastapi import HTTPException, Request
 
-# TODO handle ratelimit github api (as middleware?)
-# TODO recipe helpers + faire class pour recipes  + listen raw function et recipe
-# TODO try except
-
 
 class GithubWebhookHandler:
     def __init__(self, secret: str, unsafe_mode: bool = False) -> None:

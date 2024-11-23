@@ -11,3 +11,29 @@ def test_safe_mode_if_signature_verification_is_provided(secret):
 def test_safe_mode_if_signature_verification_is_not_provided(secret):
     webhook_handler = GithubWebhookHandler(signature_verification=None)
     assert webhook_handler.safe_mode is False
+
+
+def test_function_is_append_using_decorator():
+    webhook_handler = GithubWebhookHandler(signature_verification=None)
+
+    @webhook_handler.listen("push")
+    def foo():
+        pass
+
+    assert webhook_handler.webhooks["push"] == [foo]
+    assert webhook_handler.webhooks == webhook_handler._webhooks
+
+
+def test_function_is_append_using_list():
+    webhook_handler = GithubWebhookHandler(signature_verification=None)
+
+    def foo():
+        pass
+
+    def bar():
+        pass
+
+    webhook_handler.listen("push", [foo, bar])
+
+    assert webhook_handler.webhooks["push"] == [foo, bar]
+    assert webhook_handler.webhooks == webhook_handler._webhooks

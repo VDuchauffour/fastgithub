@@ -15,7 +15,7 @@ class SignatureVerification(ABC):
     def secret(self) -> str:
         return self._secret
 
-    async def _verify_signature(self, payload: bytes, signature: str) -> bool:
+    def _verify_signature(self, payload: bytes, signature: str) -> bool:
         """Verify the GitHub webhook signature.
 
         Args:
@@ -44,7 +44,7 @@ class SignatureVerification(ABC):
 
         payload = await request.body()
 
-        if not await self._verify_signature(payload, signature):
+        if not self._verify_signature(payload, signature):
             raise HTTPException(status_code=403, detail="Invalid signature")
 
 

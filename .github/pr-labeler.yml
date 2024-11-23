@@ -8,9 +8,10 @@ enhancement:
 bug:
   - fixes/*
   - fix/*
+  - bugs/*
+  - bug/*
   - fixes-*
   - fix-*
-  - bugs/*
   - bugs-*
   - bug-*
 chore:

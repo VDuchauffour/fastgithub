@@ -22,7 +22,7 @@ authors = [
   { name = "Vincent Duchauffour", email = "vincent.duchauffour@proton.me" },
 ]
 requires-python = ">=3.12"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
   "fastapi[standard,standard]>=0.115.5",
   "pydantic>=2.9.2",

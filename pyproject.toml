@@ -7,7 +7,7 @@ name = "fastgithub"
 description = "A Python library to supercharge your GitHub organization with bots and webhooks. "
 readme = "README.md"
 license = { file = "LICENSE" }
-keywords = ["github", "web", "bot", "ci"]
+keywords = ["github", "web", "bot", "ci", "fastapi", "automation", "webhook"]
 classifiers = [
   "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",

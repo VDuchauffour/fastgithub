@@ -1,66 +1,33 @@
 import collections
-import hashlib
-import hmac
 from collections.abc import Callable
 from typing import overload
 
 from fastapi import HTTPException, Request
 
-# TODO handle ratelimit github api (as middleware?)
-# TODO recipe helpers + faire class pour recipes  + listen raw function et recipe
-# TODO try except
+from fastgithub.signature import SignatureVerification
 
 
 class GithubWebhookHandler:
-    def __init__(self, secret: str, unsafe_mode: bool = False) -> None:
-        self._secret = secret
+    def __init__(self, signature_verification: SignatureVerification | None) -> None:
         self._webhooks = collections.defaultdict(list)
-        self._safe_mode = not unsafe_mode
-
-    @property
-    def secret(self) -> str:
-        return self._secret
+        self._signature_verification = signature_verification
 
     @property
     def webhooks(self) -> dict[str, list[Callable]]:
         return self._webhooks
 
-    async def _verify_signature(self, payload: bytes, signature: str) -> bool:
-        """Verify the GitHub webhook signature.
+    @property
+    def signature_verification(self) -> SignatureVerification | None:
+        return self._signature_verification
 
-        Args:
-            payload (bytes): The raw request payload.
-            signature (str): The signature provided by GitHub in the header.
-
-        Returns:
-            bool: True if the signature is valid, otherwise False.
-        """
-        if not signature:
-            return False
-
-        hash_alg, provided_signature = signature.split("=")
-        computed_signature = hmac.new(
-            self.secret.encode(),
-            payload,
-            hashlib.new(hash_alg).name,
-        ).hexdigest()
-
-        return hmac.compare_digest(provided_signature, computed_signature)
-
-    async def _safety_checks(self, request: Request):
-        signature = request.headers.get("X-Hub-Signature-256")
-        if not signature:
-            raise HTTPException(status_code=400, detail="Signature is missing")
-
-        payload = await request.body()
-
-        if not await self._verify_signature(payload, signature):
-            raise HTTPException(status_code=403, detail="Invalid signature")
+    @property
+    def safe_mode(self) -> bool:
+        return not self.signature_verification
 
     async def handle(self, request: Request):
         """Handle incoming webhook events from GitHub."""
-        if self._safe_mode:
-            await self._safety_checks(request)
+        if self.safe_mode:
+            await self.signature_verification.verify(request)  # type: ignore
 
         event = request.headers.get("X-GitHub-Event")
         data = await request.json()

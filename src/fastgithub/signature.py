@@ -35,7 +35,7 @@ class SignatureVerification(ABC):
         return hmac.compare_digest(provided_signature, computed_signature)
 
     async def verify(self, request: Request):
-        signature = request.headers.get(SignatureVerification.signature_header)
+        signature = request.headers.get(self.signature_header)
         if not signature:
             raise HTTPException(status_code=400, detail="Signature is missing")
 

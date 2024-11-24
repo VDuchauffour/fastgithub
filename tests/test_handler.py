@@ -1,7 +1,6 @@
 import pytest
 
-from fastgithub.handler import GithubWebhookHandler
-from fastgithub.signature import SignatureVerificationSHA256
+from fastgithub import GithubWebhookHandler, SignatureVerificationSHA256
 
 
 def test_safe_mode_if_signature_verification_is_provided(secret):

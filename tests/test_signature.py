@@ -1,4 +1,4 @@
-from fastgithub.signature import SignatureVerificationSHA1, SignatureVerificationSHA256
+from fastgithub.webhook.signature import SignatureVerificationSHA1, SignatureVerificationSHA256
 
 
 def test_sha256_verification(payload: bytes, signature_sha256: str, secret: str):

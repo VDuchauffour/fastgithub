@@ -84,11 +84,11 @@ from fastapi import FastAPI
 
 from fastgithub import (
     GithubWebhookHandler,
-    Payload,
     Recipe,
     SignatureVerificationSHA256,
     webhook_router,
 )
+from fastgithub.types import Payload
 
 signature_verification = SignatureVerificationSHA256(secret="mysecret")  # noqa: S106
 webhook_handler = GithubWebhookHandler(signature_verification)

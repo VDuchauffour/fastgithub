@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/VDuchauffour/fastgithub">
-    <img src="https://github.com/VDuchauffour/fastgithub/blob/main/assets/fastgithub.png?raw=true" alt="FastGithub written in white with a drawing of a bolt." width="45%" height="auto">
+    <img src="https://github.com/VDuchauffour/fastgithub/blob/main/assets/fastgithub.png?raw=true" alt="FastGithub written in white with a drawing of a bolt." width="85%" height="auto">
   </a>
 </p>
   <p align="center" markdown=1>

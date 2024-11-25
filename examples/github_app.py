@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from github import Auth, Github
 
 from fastgithub import GithubWebhookHandler, SignatureVerificationSHA256, webhook_router
-from fastgithub.recipes.github import AutoCreatePullRequest, LabelFromCommit
+from fastgithub.recipes.github import AutoCreatePullRequest, LabelsFromCommits
 
 signature_verification = SignatureVerificationSHA256(secret="mysecret")  # noqa: S106
 webhook_handler = GithubWebhookHandler(signature_verification)
@@ -13,7 +13,7 @@ webhook_handler = GithubWebhookHandler(signature_verification)
 github = Github(auth=Auth.Token(os.environ["GITHUB_TOKEN"]))
 
 webhook_handler.listen("push", [AutoCreatePullRequest(github)])
-webhook_handler.listen("pull_request", [LabelFromCommit(github)])
+webhook_handler.listen("pull_request", [LabelsFromCommits(github)])
 
 
 app = FastAPI()

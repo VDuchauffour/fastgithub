@@ -1,17 +1,15 @@
 """Github quota helper."""
 
 from abc import ABC
+from collections.abc import Callable
 
 from github import Github
 
-from fastgithub.types import Payload
-
 
 class Recipe(ABC):
-    events = ["*"]
-
-    def __call__(self, payload: Payload) -> None:
-        raise NotImplementedError
+    @property
+    def events(self) -> dict[str, Callable]:
+        return {}
 
 
 class GithubRecipe(Recipe):

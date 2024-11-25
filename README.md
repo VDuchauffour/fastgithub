@@ -114,20 +114,26 @@ You can define your own `Recipe` (or `GithubRecipe`) by inherit from these class
 The `webhook_router` uses the `__call__` method to perform the hooks.
 
 ```python
+from collections.abc import Callable
+
 from fastgithub import Recipe, GithubRecipe
 from fastgithub.helpers.github import GithubHelper
 from fastgithub.types import Payload
 
 
 class Hello(Recipe):
-  events = ["*"]
+    @property
+    def events(self) -> dict[str, Callable]:
+        return {"*": self.__call__}
 
     def __call__(self, payload: Payload):
         print(f"Hello from: {payload['repository']}")
 
 
 class MyGithubRecipe(GithubRecipe):
-  events = ["push", "pull_request"]
+    @property
+    def events(self) -> dict[str, Callable]:
+        return {"push": self.__call__, "pull_request": self.__call__}
 
     def __call__(self, payload: Payload):
         gh = GithubHelper(self.github, repo_fullname=payload["repository"]["full_name"])

@@ -1,3 +1,5 @@
+from collections.abc import Callable
+
 import pytest
 
 from fastgithub import GithubWebhookHandler, Recipe, SignatureVerificationSHA256
@@ -19,11 +21,19 @@ def test_recipes_is_append():
     webhook_handler = GithubWebhookHandler(signature_verification=None)
 
     class Foo(Recipe):
-        def execute(self, payload: Payload) -> None:
+        @property
+        def events(self) -> dict[str, Callable]:
+            return {"push": self.__call__}
+
+        def __call__(self, payload: Payload) -> None:
             pass
 
     class Bar(Recipe):
-        def execute(self, payload: Payload) -> None:
+        @property
+        def events(self) -> dict[str, Callable]:
+            return {"push": self.__call__}
+
+        def __call__(self, payload: Payload) -> None:
             pass
 
     recipes = [Foo(), Bar()]
@@ -39,7 +49,9 @@ def test_triggered_event_match_recipe_event_definitions():
     webhook_handler = GithubWebhookHandler(signature_verification=None)
 
     class Foo(Recipe):
-        events = ["push"]
+        @property
+        def events(self) -> dict[str, Callable]:
+            return {"push": self.__call__}
 
         def __call__(self, payload: Payload) -> None:
             pass
@@ -60,13 +72,17 @@ async def test_process_event():
     webhook_handler = GithubWebhookHandler(signature_verification=None)
 
     class Foo(Recipe):
-        events = ["push"]
+        @property
+        def events(self) -> dict[str, Callable]:
+            return {"push": self.__call__}
 
         def __call__(self, payload: Payload) -> None:
             pass
 
     class Bar(Recipe):
-        events = ["pull_request"]
+        @property
+        def events(self) -> dict[str, Callable]:
+            return {"pull_request": self.__call__}
 
         def __call__(self, payload: Payload) -> None:
             raise

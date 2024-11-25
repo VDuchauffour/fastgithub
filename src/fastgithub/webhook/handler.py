@@ -45,7 +45,7 @@ class GithubWebhookHandler:
 
     @staticmethod
     def _check_recipe_event_processing(recipe: Recipe, event: str):
-        return any(fnmatch.fnmatch(recipe_event, event) for recipe_event in recipe.events)
+        return any(fnmatch.fnmatch(recipe_event, event) for recipe_event in recipe.events.keys())
 
     async def process_event(self, event: str, payload: Payload) -> bool:
         """Process the GitHub event. Override this method to handle specific events.
@@ -60,7 +60,8 @@ class GithubWebhookHandler:
         try:
             for recipe in self.webhooks[event]:
                 if self._check_recipe_event_processing(recipe, event):
-                    recipe(payload)
+                    func = recipe.events[event]
+                    func(payload)
         except:  # noqa: E722
             return False
         else:

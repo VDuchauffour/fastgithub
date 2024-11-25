@@ -40,11 +40,11 @@ async def test_process_event():
     webhook_handler = GithubWebhookHandler(signature_verification=None)
 
     class Foo(Recipe):
-        def execute(self, payload: Payload) -> None:
+        def __call__(self, payload: Payload) -> None:
             pass
 
     class Bar(Recipe):
-        def execute(self, payload: Payload) -> None:
+        def __call__(self, payload: Payload) -> None:
             raise
 
     webhook_handler.listen("push", [Foo()])

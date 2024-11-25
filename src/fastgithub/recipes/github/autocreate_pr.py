@@ -6,6 +6,8 @@ from fastgithub.types import Payload
 
 
 class AutoCreatePullRequest(GithubRecipe):
+    events = ["push"]
+
     def __call__(
         self,
         payload: Payload,

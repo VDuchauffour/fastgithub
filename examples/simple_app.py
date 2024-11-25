@@ -21,11 +21,15 @@ github = Github(auth=Auth.Token(os.environ["GITHUB_TOKEN"]))
 
 
 class Hello(Recipe):
+    events = ["*"]
+
     def __call__(self, payload: Payload):
         print(f"Hello from: {payload['repository']}")
 
 
 class MyGithubRecipe(GithubRecipe):
+    events = ["push", "pull_request"]
+
     def __call__(self, payload: Payload):
         gh = GithubHelper(self.github, repo_fullname=payload["repository"]["full_name"])
         if not gh.rate_status.too_low():

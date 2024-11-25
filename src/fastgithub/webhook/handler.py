@@ -1,5 +1,6 @@
 import collections
-from collections.abc import Callable, Sequence
+import fnmatch
+from collections.abc import Sequence
 
 from fastapi import HTTPException, Request
 
@@ -15,7 +16,7 @@ class GithubWebhookHandler:
         self._signature_verification = signature_verification
 
     @property
-    def webhooks(self) -> dict[str, list[Callable]]:
+    def webhooks(self) -> dict[str, list[Recipe]]:
         return self._webhooks
 
     @property
@@ -42,6 +43,10 @@ class GithubWebhookHandler:
                 raise HTTPException(status_code=400, detail="Error during {event} event!")
         raise HTTPException(status_code=422, detail="No event provided!")
 
+    @staticmethod
+    def _check_recipe_event_processing(recipe: Recipe, event: str):
+        return any(fnmatch.fnmatch(recipe_event, event) for recipe_event in recipe.events)
+
     async def process_event(self, event: str, payload: Payload) -> bool:
         """Process the GitHub event. Override this method to handle specific events.
 
@@ -54,7 +59,8 @@ class GithubWebhookHandler:
         """
         try:
             for recipe in self.webhooks[event]:
-                recipe(payload)
+                if self._check_recipe_event_processing(recipe, event):
+                    recipe(payload)
         except:  # noqa: E722
             return False
         else:

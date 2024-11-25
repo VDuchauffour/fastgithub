@@ -8,6 +8,8 @@ from fastgithub.types import Payload
 
 
 class Recipe(ABC):
+    events = ["*"]
+
     def __call__(self, payload: Payload) -> None:
         raise NotImplementedError
 

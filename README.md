@@ -67,38 +67,17 @@ pip install fastgithub
 
 ## Usage
 
-This is a basic example that handles the creation of a PR during a push event and the extraction of labels from the PR's commit messages.
+FastGitHub usually involve 3 steps to handle GitHub webhooks:
 
-```python
-import os
+1. Define the recipes you want to use.
+2. Attach these recipes to a `GithubWebhookHandler`.
+3. Include a `webhook_router` to your FastAPI application.
 
-import uvicorn
-from fastapi import FastAPI
-from github import Auth, Github
+### Recipes
 
-from fastgithub import GithubWebhookHandler, SignatureVerificationSHA256, webhook_router
-from fastgithub.recipes.github import AutoCreatePullRequest, LabelsFromCommits
+To define a `Recipe` (or `GithubRecipe`), you just need to add a `events` property that returns a `dict` with events as keys and their methods to execute. Use `*` to trigger the recipe on any events.
 
-signature_verification = SignatureVerificationSHA256(secret="mysecret")  # noqa: S106
-webhook_handler = GithubWebhookHandler(signature_verification)
-
-github = Github(auth=Auth.Token(os.environ["GITHUB_TOKEN"]))
-
-webhook_handler.listen("push", [AutoCreatePullRequest(github)])
-webhook_handler.listen("pull_request", [LabelsFromCommits(github)])
-
-
-app = FastAPI()
-router = webhook_router(handler=webhook_handler, path="/postreceive")
-app.include_router(router)
-
-if __name__ == "__main__":
-    uvicorn.run(app)
-```
-
-You can define your own `Recipe` (or `GithubRecipe`) by inherit from these classes. A `Recipe` need a class attribute `events` that take a list of events to listen to, by default the recipe is listen by any type of event (ie. `*`).
-
-The `webhook_router` uses the `__call__` method to perform the hooks.
+To use a `GithubRecipe`, a `Github` instance from [PyGithub](https://github.com/PyGithub/PyGithub) is required when instantiated the class.
 
 ```python
 from collections.abc import Callable
@@ -126,6 +105,49 @@ class MyGithubRecipe(GithubRecipe):
         gh = GithubHelper(self.github, repo_fullname=payload["repository"]["full_name"])
         if not gh.rate_status.too_low():
             print(f"Hello from {gh.repo.full_name}!")
+```
+
+#### Available recipes
+
+- `AutoCreatePullRequest`: create a PR when a new branch is pushed.
+- `LabelsFromCommits`: add label to a PR using commit messages (a default config is provided).
+
+GitHub Recipe can be imported from `fastgithub.recipes.github`.
+
+### Webhook handler
+
+Here's a basic example how to define a `GithubWebhookHandler` with SHA256 signature verification. Setting `signature_verification=None` allows using Github webhook without signature verification (which is not at all the recommended way to publishing GitHub webhook).
+
+```python
+from fastgithub import GithubWebhookHandler, SignatureVerificationSHA256
+
+signature_verification = SignatureVerificationSHA256(secret="mysecret")
+webhook_handler = GithubWebhookHandler(signature_verification)
+```
+
+You need to use the `listen` handler's method to attach recipes to specific events.
+
+```python
+webhook_handler.listen("push", [Hello(github)])
+webhook_handler.listen("pull_request", [MyGithubRecipe(github)])
+```
+
+### Webhook router
+
+The `webhook_router` function returns a `fastapi.APIRouter`. You can use the inner logic of this function for your needs.
+
+```python
+import uvicorn
+from fastapi import FastAPI
+
+from fastgithub import webhook_router
+
+app = FastAPI()
+router = webhook_router(handler=webhook_handler, path="/postreceive")
+app.include_router(router)
+
+if __name__ == "__main__":
+    uvicorn.run(app)
 ```
 
 ## Development

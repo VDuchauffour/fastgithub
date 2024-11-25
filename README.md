@@ -65,8 +65,6 @@ pip install fastgithub
 
 ## Usage
 
-### Example
-
 This is a basic example that handles the creation of a PR during a push event and the extraction of labels from the PR's commit messages.
 
 ```python

@@ -45,9 +45,9 @@
 ## Features
 
 - ⚙ **Seamless experience**: GitHub webhook handler and router classes that just works.
-- ⚡️ **FastAPI native**: Build for FastAPI but can be easily integrate in any WSGI web application framework.
-- 🔌 **Battery included**: Come with a set of builtins recipes for most common GitHub operations.
-- ️⛏ **Modularity**: Recipes can be easily define for custom-tailor needs.
+- ⚡️ **FastAPI native**: Build for FastAPI but can be easily integrate with any WSGI web application framework.
+- 🔌 **Battery included**: Come with a set of built-in recipes for the most common GitHub operations.
+- ️⛏ **Modularity**: Recipes can be easily defined for tailor-made needs.
 
 ## Requirements
 
@@ -67,17 +67,17 @@ pip install fastgithub
 
 ## Usage
 
-FastGitHub usually involve 3 steps to handle GitHub webhooks:
+FastGitHub usually involves 3 steps to handle GitHub webhooks:
 
 1. Define the recipes you want to use.
 2. Attach these recipes to a `GithubWebhookHandler`.
-3. Include a `webhook_router` to your FastAPI application.
+3. Include a `webhook_router` in your FastAPI application.
 
 ### Recipes
 
-To define a `Recipe` (or `GithubRecipe`), you just need to add a `events` property that returns a `dict` with events as keys and their methods to execute. Use `*` to trigger the recipe on any events.
+To define a `Recipe` (or `GithubRecipe`), simply add `events` property that returns a `dict` with the events as keys and their methods to execute. Use `*` to trigger the recipe on any events.
 
-To use a `GithubRecipe`, a `Github` instance from [PyGithub](https://github.com/PyGithub/PyGithub) is required when instantiated the class.
+To use a `GithubRecipe`, a `Github` instance from [PyGithub](https://github.com/PyGithub/PyGithub) is required when instantiating the class.
 
 ```python
 from collections.abc import Callable
@@ -112,11 +112,11 @@ class MyGithubRecipe(GithubRecipe):
 - `AutoCreatePullRequest`: create a PR when a new branch is pushed.
 - `LabelsFromCommits`: add label to a PR using commit messages (a default config is provided).
 
-GitHub Recipe can be imported from `fastgithub.recipes.github`.
+GitHub recipes can be imported from `fastgithub.recipes.github`.
 
 ### Webhook handler
 
-Here's a basic example how to define a `GithubWebhookHandler` with SHA256 signature verification. Setting `signature_verification=None` allows using Github webhook without signature verification (which is not at all the recommended way to publishing GitHub webhook).
+Here's a basic example how to define a `GithubWebhookHandler` with SHA256 signature verification. Setting `signature_verification=None` allows you to use the handler without signature verification (which is not at all the recommended way to publish GitHub webhook).
 
 ```python
 from fastgithub import GithubWebhookHandler, SignatureVerificationSHA256
@@ -134,7 +134,7 @@ webhook_handler.listen("pull_request", [MyGithubRecipe(github)])
 
 ### Webhook router
 
-The `webhook_router` function returns a `fastapi.APIRouter`. You can use the inner logic of this function for your needs.
+The `webhook_router` function returns a `fastapi.APIRouter`. You can adopte the inner logic of this function to suit your needs.
 
 ```python
 import uvicorn

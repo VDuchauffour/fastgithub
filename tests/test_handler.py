@@ -1,6 +1,7 @@
 import pytest
 
-from fastgithub import GithubWebhookHandler, SignatureVerificationSHA256
+from fastgithub import GithubWebhookHandler, Recipe, SignatureVerificationSHA256
+from fastgithub.types import Payload
 
 
 def test_safe_mode_if_signature_verification_is_provided(secret):
@@ -14,29 +15,23 @@ def test_safe_mode_if_signature_verification_is_not_provided(secret):
     assert webhook_handler.safe_mode is False
 
 
-def test_function_is_append_using_decorator():
+def test_recipes_is_append():
     webhook_handler = GithubWebhookHandler(signature_verification=None)
 
-    @webhook_handler.listen("push")
-    def foo():
-        pass
+    class Foo(Recipe):
+        def execute(self, payload: Payload) -> None:
+            pass
 
-    assert webhook_handler.webhooks["push"] == [foo]
-    assert webhook_handler.webhooks == webhook_handler._webhooks
+    class Bar(Recipe):
+        def execute(self, payload: Payload) -> None:
+            pass
 
+    recipes = [Foo(), Bar()]
+    webhook_handler.listen("push", recipes)
 
-def test_function_is_append_using_list():
-    webhook_handler = GithubWebhookHandler(signature_verification=None)
-
-    def foo():
-        pass
-
-    def bar():
-        pass
-
-    webhook_handler.listen("push", [foo, bar])
-
-    assert webhook_handler.webhooks["push"] == [foo, bar]
+    for recipe, recipe_type in zip(webhook_handler.webhooks["push"], recipes):
+        assert isinstance(recipe, type(recipe_type))
+    assert len(webhook_handler.webhooks["push"]) == 2
     assert webhook_handler.webhooks == webhook_handler._webhooks
 
 
@@ -44,13 +39,15 @@ def test_function_is_append_using_list():
 async def test_process_event():
     webhook_handler = GithubWebhookHandler(signature_verification=None)
 
-    def foo(*args, **kwargs):
-        pass
+    class Foo(Recipe):
+        def __call__(self, payload: Payload) -> None:
+            pass
 
-    def bar(*args, **kwargs):
-        raise
+    class Bar(Recipe):
+        def __call__(self, payload: Payload) -> None:
+            raise
 
-    webhook_handler.listen("push", [foo])
+    webhook_handler.listen("push", [Foo()])
     assert await webhook_handler.process_event("push", {}) is True
-    webhook_handler.listen("pull_request", [bar])
+    webhook_handler.listen("pull_request", [Bar()])
     assert await webhook_handler.process_event("pull_request", {}) is False

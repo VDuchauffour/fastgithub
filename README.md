@@ -64,7 +64,7 @@ ______________________________________________________________________
 
 FastGitHub provides a GitHub webhooks handler for FastAPI to automate your workflows.
 
-FastGitHub also provides sets of automations (named _recipes_).
+FastGitHub also provides sets of automations (named **recipes**).
 
 ## ️️⚙️ Installation
 
@@ -78,20 +78,25 @@ pip install fastgithub
 
 ### Example
 
+This is a basic example that handles the creation of a PR during a push event and the extraction of labels from the PR's commit messages.
+
 ```python
-from typing import Any
+import os
 
 import uvicorn
 from fastapi import FastAPI
-from fastgithub import GithubWebhookHandler, SignatureVerificationSHA256, webhook_router
+from github import Auth, Github
 
-signature_verification = SignatureVerificationSHA256(secret="mysecret")
+from fastgithub import GithubWebhookHandler, SignatureVerificationSHA256, webhook_router
+from fastgithub.recipes.github import AutoCreatePullRequest, LabelFromCommit
+
+signature_verification = SignatureVerificationSHA256(secret="mysecret")  # noqa: S106
 webhook_handler = GithubWebhookHandler(signature_verification)
 
+github = Github(auth=Auth.Token(os.environ["GITHUB_TOKEN"]))
 
-@webhook_handler.listen("push")
-def hello(data: dict[str, Any]):
-    print(f"Hello from: {data['repository']}")
+webhook_handler.listen("push", [AutoCreatePullRequest(github)])
+webhook_handler.listen("pull_request", [LabelFromCommit(github)])
 
 
 app = FastAPI()
@@ -102,18 +107,24 @@ if __name__ == "__main__":
     uvicorn.run(app)
 ```
 
-You can also fill a list of functions for a specific event to the handler:
+You can define your own `Recipe` (or `GithubRecipe`) by inherit from these classes. The `webhook_router` uses the `__call__` method to perform the hooks.
 
 ```python
-def hello(data: dict[str, Any]):
-    print(f"Hello from: {data['repository']}")
+from fastgithub import Recipe, GithubRecipe
+from fastgithub.helpers.github import GithubHelper
+from fastgithub.types import Payload
 
 
-def bye(data: dict[str, Any]):
-    print(f"Goodbye from: {data['repository']}")
+class Hello(Recipe):
+    def __call__(self, payload: Payload):
+        print(f"Hello from: {payload['repository']}")
 
 
-webhook_handler.listen("push", [hello, bye])
+class MyGithubRecipe(GithubRecipe):
+    def __call__(self, payload: Payload):
+        gh = GithubHelper(self.github, repo_fullname=payload["repository"]["full_name"])
+        if not gh.rate_status.too_low():
+            print(f"Hello from {gh.repo.full_name}!")
 ```
 
 ## ⛏️ Development
@@ -132,4 +143,4 @@ uv run pre-commit install
 
 ## Acknowledgements
 
-Initial ideas and designs are inspired by [python-github-webhook](https://github.com/bloomberg/python-github-webhook) and [python-github-bot-api](https://github.com/NiklasRosenstein/python-github-bot-api/)
+Initial ideas and designs were inspired by [python-github-webhook](https://github.com/bloomberg/python-github-webhook) and [python-github-bot-api](https://github.com/NiklasRosenstein/python-github-bot-api/)

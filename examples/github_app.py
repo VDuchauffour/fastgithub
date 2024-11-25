@@ -1,23 +1,20 @@
-from typing import Any
+import os
 
 import uvicorn
 from fastapi import FastAPI
+from github import Auth, Github
 
 from fastgithub import GithubWebhookHandler, SignatureVerificationSHA256, webhook_router
+from fastgithub.recipes.github import AutoCreatePullRequest, LabelFromCommit
 
 signature_verification = SignatureVerificationSHA256(secret="mysecret")  # noqa: S106
 webhook_handler = GithubWebhookHandler(signature_verification)
 
+github = Github(auth=Auth.Token(os.environ["GITHUB_TOKEN"]))
 
-def hello(data: dict[str, Any]):
-    print(f"Hello from: {data['repository']}")
+webhook_handler.listen("push", [AutoCreatePullRequest(github)])
+webhook_handler.listen("pull_request", [LabelFromCommit(github)])
 
-
-def bye(data: dict[str, Any]):
-    print(f"Goodbye from: {data['repository']}")
-
-
-webhook_handler.listen("push", [hello, bye])
 
 app = FastAPI()
 router = webhook_router(handler=webhook_handler, path="/postreceive")

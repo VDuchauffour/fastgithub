@@ -1,74 +1,61 @@
-<div align="center">
+<p align="center">
+  <a href="https://igorbenav.github.io/fastcrud/">
+    <img src="https://github.com/VDuchauffour/fastgithub/blob/main/assets/fastgithub.png?raw=true" alt="FastGithub written in white with a drawing of a bolt." width="45%" height="auto">
+  </a>
+</p>
+  <p align="center" markdown=1>
+    <i>A Python library to supercharge your GitHub organization with bots and webhooks. </i>
+  </p>
+  <p align="center" markdown=1>
+    <a href="https://github.com/VDuchauffour/fastgithub/actions/workflows/ci.yml">
+      <img src="https://github.com/VDuchauffour/fastgithub/actions/workflows/ci.yml/badge.svg" alt="CI Pipeline">
+    </a>
+    <a href="https://github.com/VDuchauffour/fastgithub/actions/workflows/release.yml">
+      <img src="https://github.com/VDuchauffour/fastgithub/actions/workflows/release.yml/badge.svg" alt="Release">
+    </a>
+    <a href="https://codecov.io/gh/VDuchauffour/fastgithub">
+      <img src="https://codecov.io/gh/VDuchauffour/fastgithub/branch/main/graph/badge.svg" alt="Codecov">
+    </a>
+    <br>
+    <a href="https://github.com/astral-sh/ruff">
+      <img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json" alt="Ruff">
+    </a>
+    <a href="https://github.com/pre-commit/pre-commit">
+      <img src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit" alt="Pre-commit">
+    </a>
+    <a href="https://spdx.org/licenses/">
+      <img src="https://img.shields.io/github/license/VDuchauffour/fastgithub?color=blueviolet" alt="License">
+    </a>
+    <br>
+    <a href="https://pypi.org/project/fastgithub/">
+      <img src="https://img.shields.io/pypi/pyversions/fastgithub.svg?logo=python&label=Python&logoColor=gold" alt="PyPI - Python version">
+    </a>
+    <a href="https://pypi.org/project/fastgithub/">
+      <img src="https://img.shields.io/pypi/v/fastgithub.svg?logo=pypi&label=PyPI&logoColor=gold" alt="PyPI - Version">
+    </a>
+  </p>
+</p>
+<hr>
+    <p align="justify">
+    <b>FastGitHub</b> is a Python package for <b>FastAPI</b>, offering a GitHub webhooks handler and easy Bot creation utilities, streamlined through <b>recipes</b> for easy operations on Github organizations and repositories.
+    </p>
+<p><b>More informations about Github webhooks and payloads</b>: <a href="https://docs.github.com/en/webhooks/webhook-events-and-payloads">docs.github.com/en/webhooks/webhook-events-and-payloads</a></p>
+<hr>
+<h2>Features</h2>
 
-# FastGitHub
+- ⚙ **Seamless experience**: GitHub webhook handler and router classes that just works.
+- ⚡️ **FastAPI native**: Build for FastAPI but can be easily integrate in any WSGI web application framework.
+- 🔌 **Battery included**: Come with a set of builtins recipes for most common GitHub operations.
+- ️⛏ **Modularity**: Recipes can be easily define for custom-tailor needs.
 
-<table>
-  <tr>
-    <td>
-    </td>
-    <td>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      CI/CD
-    </td>
-    <td>
-      <a href="https://github.com/VDuchauffour/fastgithub/actions/workflows/ci.yml">
-        <img src="https://github.com/VDuchauffour/fastgithub/actions/workflows/ci.yml/badge.svg" alt="CI Pipeline">
-      </a>
-      <a href="https://github.com/VDuchauffour/fastgithub/actions/workflows/release.yml">
-        <img src="https://github.com/VDuchauffour/fastgithub/actions/workflows/release.yml/badge.svg" alt="Release">
-      </a>
-      <a href="https://codecov.io/gh/VDuchauffour/fastgithub">
-        <img src="https://codecov.io/gh/VDuchauffour/fastgithub/branch/main/graph/badge.svg" alt="Codecov">
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td>
-        Meta
-    </td>
-    <td>
-      <a href="https://github.com/astral-sh/ruff">
-        <img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json" alt="Ruff">
-      </a>
-      <a href="https://github.com/pre-commit/pre-commit">
-        <img src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit" alt="Pre-commit">
-      </a>
-      <a href="https://spdx.org/licenses/">
-        <img src="https://img.shields.io/github/license/VDuchauffour/fastgithub?color=blueviolet" alt="License">
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td>
-        Package
-    </td>
-    <td>
-      <a href="https://pypi.org/project/fastgithub/">
-        <img src="https://img.shields.io/pypi/pyversions/fastgithub.svg?logo=python&label=Python&logoColor=gold" alt="PyPI - Python version">
-      </a>
-      <a href="https://pypi.org/project/fastgithub/">
-        <img src="https://img.shields.io/pypi/v/fastgithub.svg?logo=pypi&label=PyPI&logoColor=gold" alt="PyPI - Version">
-      </a>
-    </td>
-  </tr>
-</table>
+<h2>Requirements</h2>
+<p>Before installing FastGitHub, ensure you have the following prerequisites:</p>
+<ul>
+  <li><b>Python:</b> Version 3.12 or newer.</li>
+  <li><b>FastAPI:</b> FastCRUD is built to work with FastAPI, so having FastAPI in your project is essential.</li>
+</ul>
 
-</div>
-
-______________________________________________________________________
-
-## About this project
-
-FastGitHub provides a GitHub webhooks handler for FastAPI to automate your workflows.
-
-FastGitHub also provides sets of automations (named **recipes**).
-
-More informations about Github webhooks and payloads can be found [here](https://docs.github.com/en/webhooks/webhook-events-and-payloads).
-
-## ️️⚙️ Installation
+## ️️Installation
 
 Install the package from the PyPI registry.
 
@@ -76,7 +63,7 @@ Install the package from the PyPI registry.
 pip install fastgithub
 ```
 
-## ⚡ Usage
+## Usage
 
 ### Example
 
@@ -141,7 +128,7 @@ class MyGithubRecipe(GithubRecipe):
             print(f"Hello from {gh.repo.full_name}!")
 ```
 
-## ⛏️ Development
+## Development
 
 In order to install all development dependencies, run the following command:
 
@@ -157,4 +144,5 @@ uv run pre-commit install
 
 ## Acknowledgements
 
-Initial ideas and designs were inspired by [python-github-webhook](https://github.com/bloomberg/python-github-webhook) and [python-github-bot-api](https://github.com/NiklasRosenstein/python-github-bot-api/)
+- Initial ideas and designs were inspired by [python-github-webhook](https://github.com/bloomberg/python-github-webhook) and [python-github-bot-api](https://github.com/NiklasRosenstein/python-github-bot-api/).
+- Readme layout was inspired by [FastCRUD](https://github.com/igorbenav/fastcrud).

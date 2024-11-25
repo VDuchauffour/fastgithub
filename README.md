@@ -41,14 +41,16 @@
     </p>
 <p><b>More informations about Github webhooks and payloads</b>: <a href="https://docs.github.com/en/webhooks/webhook-events-and-payloads">docs.github.com/en/webhooks/webhook-events-and-payloads</a></p>
 <hr>
-<h2>Features</h2>
+
+## Features
 
 - ⚙ **Seamless experience**: GitHub webhook handler and router classes that just works.
 - ⚡️ **FastAPI native**: Build for FastAPI but can be easily integrate in any WSGI web application framework.
 - 🔌 **Battery included**: Come with a set of builtins recipes for most common GitHub operations.
 - ️⛏ **Modularity**: Recipes can be easily define for custom-tailor needs.
 
-<h2>Requirements</h2>
+## Requirements
+
 <p>Before installing FastGitHub, ensure you have the following prerequisites:</p>
 <ul>
   <li><b>Python:</b> Version 3.12 or newer.</li>

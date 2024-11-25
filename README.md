@@ -66,6 +66,8 @@ FastGitHub provides a GitHub webhooks handler for FastAPI to automate your workf
 
 FastGitHub also provides sets of automations (named **recipes**).
 
+More informations about Github webhooks and payloads can be found [here](https://docs.github.com/en/webhooks/webhook-events-and-payloads).
+
 ## ️️⚙️ Installation
 
 Install the package from the PyPI registry.
@@ -107,7 +109,9 @@ if __name__ == "__main__":
     uvicorn.run(app)
 ```
 
-You can define your own `Recipe` (or `GithubRecipe`) by inherit from these classes. The `webhook_router` uses the `__call__` method to perform the hooks.
+You can define your own `Recipe` (or `GithubRecipe`) by inherit from these classes. A `Recipe` need a class attribute `events` that take a list of events to listen to, by default the recipe is listen by any type of event (ie. `*`).
+
+The `webhook_router` uses the `__call__` method to perform the hooks.
 
 ```python
 from fastgithub import Recipe, GithubRecipe
@@ -116,11 +120,15 @@ from fastgithub.types import Payload
 
 
 class Hello(Recipe):
+  events = ["*"]
+
     def __call__(self, payload: Payload):
         print(f"Hello from: {payload['repository']}")
 
 
 class MyGithubRecipe(GithubRecipe):
+  events = ["push", "pull_request"]
+
     def __call__(self, payload: Payload):
         gh = GithubHelper(self.github, repo_fullname=payload["repository"]["full_name"])
         if not gh.rate_status.too_low():

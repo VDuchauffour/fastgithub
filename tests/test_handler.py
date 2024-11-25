@@ -35,15 +35,39 @@ def test_recipes_is_append():
     assert webhook_handler.webhooks == webhook_handler._webhooks
 
 
+def test_triggered_event_match_recipe_event_definitions():
+    webhook_handler = GithubWebhookHandler(signature_verification=None)
+
+    class Foo(Recipe):
+        events = ["push"]
+
+        def __call__(self, payload: Payload) -> None:
+            pass
+
+    event = "push"
+    webhook_handler.listen(event, [Foo()])
+    recipe = webhook_handler.webhooks[event][0]
+    assert webhook_handler._check_recipe_event_processing(recipe, event) is True
+
+    event = "pull_request"
+    assert webhook_handler._check_recipe_event_processing(recipe, event) is False
+
+    assert webhook_handler._check_recipe_event_processing(recipe, "*") is True
+
+
 @pytest.mark.asyncio
 async def test_process_event():
     webhook_handler = GithubWebhookHandler(signature_verification=None)
 
     class Foo(Recipe):
+        events = ["push"]
+
         def __call__(self, payload: Payload) -> None:
             pass
 
     class Bar(Recipe):
+        events = ["pull_request"]
+
         def __call__(self, payload: Payload) -> None:
             raise
 

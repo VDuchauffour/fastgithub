@@ -11,6 +11,8 @@ LABEL_CONFIG: dict[str, list[str]] = {
 
 
 class LabelsFromCommits(GithubRecipe):
+    events = ["pull_request"]
+
     def __call__(
         self,
         payload: Payload,

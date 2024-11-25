@@ -145,4 +145,4 @@ uv run pre-commit install
 ## Acknowledgements
 
 - Initial ideas and designs were inspired by [python-github-webhook](https://github.com/bloomberg/python-github-webhook) and [python-github-bot-api](https://github.com/NiklasRosenstein/python-github-bot-api/).
-- Readme layout was inspired by [FastCRUD](https://github.com/igorbenav/fastcrud).
+- README.md layout was inspired by [FastCRUD](https://github.com/igorbenav/fastcrud).

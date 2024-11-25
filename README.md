@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://igorbenav.github.io/fastcrud/">
+  <a href="https://github.com/VDuchauffour/fastgithub">
     <img src="https://github.com/VDuchauffour/fastgithub/blob/main/assets/fastgithub.png?raw=true" alt="FastGithub written in white with a drawing of a bolt." width="45%" height="auto">
   </a>
 </p>
@@ -52,7 +52,7 @@
 <p>Before installing FastGitHub, ensure you have the following prerequisites:</p>
 <ul>
   <li><b>Python:</b> Version 3.12 or newer.</li>
-  <li><b>FastAPI:</b> FastCRUD is built to work with FastAPI, so having FastAPI in your project is essential.</li>
+  <li><b>FastAPI:</b> FastGitHub is built to work with FastAPI, so having FastAPI in your project is essential.</li>
 </ul>
 
 ## ️️Installation

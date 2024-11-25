@@ -1,12 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 
-from fastgithub import (
-    GithubWebhookHandler,
-    Recipe,
-    SignatureVerificationSHA256,
-    webhook_router,
-)
+from fastgithub import GithubWebhookHandler, Recipe, SignatureVerificationSHA256, webhook_router
 from fastgithub.types import Payload
 
 signature_verification = SignatureVerificationSHA256(secret="mysecret")  # noqa: S106

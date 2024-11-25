@@ -1,3 +1,5 @@
+from collections.abc import Callable
+
 from fastgithub.helpers.github import GithubHelper
 from fastgithub.recipes._base import GithubRecipe
 from fastgithub.types import Payload
@@ -11,9 +13,11 @@ LABEL_CONFIG: dict[str, list[str]] = {
 
 
 class LabelsFromCommits(GithubRecipe):
-    events = ["pull_request"]
+    @property
+    def events(self) -> dict[str, Callable]:
+        return {"pull_request": self._process_push}
 
-    def __call__(
+    def _process_push(
         self,
         payload: Payload,
         labels_config: dict[str, list[str]] = LABEL_CONFIG,

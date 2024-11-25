@@ -1,4 +1,5 @@
 import os
+from collections.abc import Callable
 
 import uvicorn
 from fastapi import FastAPI
@@ -21,14 +22,18 @@ github = Github(auth=Auth.Token(os.environ["GITHUB_TOKEN"]))
 
 
 class Hello(Recipe):
-    events = ["*"]
+    @property
+    def events(self) -> dict[str, Callable]:
+        return {"*": self.__call__}
 
     def __call__(self, payload: Payload):
         print(f"Hello from: {payload['repository']}")
 
 
 class MyGithubRecipe(GithubRecipe):
-    events = ["push", "pull_request"]
+    @property
+    def events(self) -> dict[str, Callable]:
+        return {"push": self.__call__, "pull_request": self.__call__}
 
     def __call__(self, payload: Payload):
         gh = GithubHelper(self.github, repo_fullname=payload["repository"]["full_name"])

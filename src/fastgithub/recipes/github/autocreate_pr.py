@@ -1,3 +1,5 @@
+from collections.abc import Callable
+
 from github.GithubException import GithubException
 
 from fastgithub.helpers.github import GithubHelper
@@ -6,9 +8,11 @@ from fastgithub.types import Payload
 
 
 class AutoCreatePullRequest(GithubRecipe):
-    events = ["push"]
+    @property
+    def events(self) -> dict[str, Callable]:
+        return {"push": self._process_push}
 
-    def __call__(
+    def _process_push(
         self,
         payload: Payload,
         base_branch: str | None = None,

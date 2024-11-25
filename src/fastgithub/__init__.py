@@ -3,7 +3,7 @@
 from importlib.metadata import version
 
 from .endpoint.webhook_router import webhook_router
-from .recipes import Recipe, github
+from .recipes import Recipe
 from .webhook.handler import GithubWebhookHandler
 from .webhook.signature import SignatureVerificationSHA256
 

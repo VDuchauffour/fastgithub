@@ -1,5 +1,5 @@
 import collections
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 
 from fastapi import HTTPException, Request
 
@@ -54,11 +54,11 @@ class GithubWebhookHandler:
         """
         try:
             for recipe in self.webhooks[event]:
-                recipe.execute(payload)
+                recipe(payload)
         except:  # noqa: E722
             return False
         else:
             return True
 
-    def listen(self, event: str, recipes: list[Recipe]) -> None:
+    def listen(self, event: str, recipes: Sequence[Recipe]) -> None:
         self._webhooks[event].extend(recipes)

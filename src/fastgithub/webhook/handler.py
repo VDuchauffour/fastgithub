@@ -1,6 +1,8 @@
 import collections
 import fnmatch
-from collections.abc import Sequence
+import itertools
+from collections.abc import Callable, Sequence
+from typing import overload
 
 from fastapi import HTTPException, Request
 
@@ -12,12 +14,17 @@ from .signature import SignatureVerification
 
 class GithubWebhookHandler:
     def __init__(self, signature_verification: SignatureVerification | None) -> None:
-        self._webhooks = collections.defaultdict(list)
         self._signature_verification = signature_verification
+        self._webhooks = collections.defaultdict(list)
+        self._recipes = []
 
     @property
-    def webhooks(self) -> dict[str, list[Recipe]]:
+    def webhooks(self) -> dict[str, list[Callable]]:
         return self._webhooks
+
+    @property
+    def recipes(self) -> list[Callable]:
+        return self._recipes
 
     @property
     def signature_verification(self) -> SignatureVerification | None:
@@ -43,9 +50,13 @@ class GithubWebhookHandler:
                 raise HTTPException(status_code=400, detail="Error during {event} event!")
         raise HTTPException(status_code=422, detail="No event provided!")
 
-    @staticmethod
-    def _check_recipe_event_processing(recipe: Recipe, event: str):
-        return any(fnmatch.fnmatch(recipe_event, event) for recipe_event in recipe.events.keys())
+    def _infer_event_recipes(self, event: str) -> list[Callable]:
+        webhook_recipes = [
+            webhook_recipes
+            for webhook_event, webhook_recipes in self.webhooks.items()
+            if fnmatch.fnmatch(event, webhook_event)
+        ]
+        return list(itertools.chain.from_iterable(webhook_recipes))
 
     async def process_event(self, event: str, payload: Payload) -> bool:
         """Process the GitHub event. Override this method to handle specific events.
@@ -58,14 +69,37 @@ class GithubWebhookHandler:
             bool: True if the process handle well, otherwise False.
         """
         try:
-            for recipe in self.webhooks[event]:
-                if self._check_recipe_event_processing(recipe, event):
-                    func = recipe.events[event]
-                    func(payload)
+            webhook_recipes = self._infer_event_recipes(event)
+            for recipe in webhook_recipes:
+                recipe(payload)
         except:  # noqa: E722
             return False
         else:
             return True
 
-    def listen(self, event: str, recipes: Sequence[Recipe]) -> None:
-        self._webhooks[event].extend(recipes)
+    @overload
+    def listen(self, event: str) -> Callable: ...
+
+    @overload
+    def listen(self, event: str, recipes: list[Callable]) -> Callable: ...
+
+    def listen(self, event: str, recipes: Sequence[Callable] | None = None) -> Callable | None:
+        if recipes is None:
+
+            def decorator(func):
+                self.listen(event, [func])
+                return func
+
+            return decorator
+        else:
+            if any(not isinstance(recipe, Callable) for recipe in recipes):
+                raise ValueError(
+                    f"{self.listen.__name__} works only with functions, use {self.plan.__name__} with {Recipe.__name__}!"  # noqa: E501
+                )
+            self.webhooks[event].extend(recipes)
+            self.recipes.extend(recipes)
+
+    def plan(self, recipes: Sequence[Recipe]) -> None:
+        for recipe in recipes:
+            for event, func in recipe.events.items():
+                self.listen(event, [func])

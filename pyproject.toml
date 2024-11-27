@@ -52,6 +52,7 @@ version-file = "src/fastgithub/_version.py"
 
 [tool.uv]
 cache-keys = [{ git = { commit = true, tags = true } }]
+reinstall-package = ["fastgithub"]
 
 [tool.ruff]
 extend-exclude = ["setup.py"]

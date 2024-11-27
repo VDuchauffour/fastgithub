@@ -17,12 +17,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-      - name: Install pre-commit
-        run: pip install pre-commit
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+      - name: Install Python 3.12
+        run: uv python install 3.12
       - name: Run pre-commit
-        run: pre-commit autoupdate
+        run: uv run pre-commit autoupdate
       - name: Set git config
         run: |
           git config --local user.email "action@github.com"

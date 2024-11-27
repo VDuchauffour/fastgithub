@@ -27,7 +27,6 @@
     "**/.settings": true,
     "**/*.egg-info": true,
     "**/.coverage": true,
-    "**/.python-version": true,
     "**/*.pyc": true,
     "**/.venv": true,
     "**/htmlcov": true,

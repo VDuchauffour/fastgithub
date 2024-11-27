@@ -105,8 +105,9 @@ class MyGithubRecipe(GithubRecipe):
 
     def __call__(self, payload: Payload):
         gh = GithubHelper(self.github, repo_fullname=payload["repository"]["full_name"])
-        if not gh.rate_status.too_low():
-            print(f"Hello from {gh.repo.full_name}!")
+        gh.raise_for_rate_excess()
+
+        print(f"Hello from {gh.repo.full_name}!")
 
 
 def very_simple_recipe(payload: Payload) -> None:

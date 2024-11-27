@@ -131,12 +131,17 @@ signature_verification = SignatureVerificationSHA256(secret="mysecret")
 webhook_handler = GithubWebhookHandler(signature_verification)
 ```
 
-You can use the `plan` method to set recipes to a handler. The `listen` handler's method allows you attach recipe functions to specific events.
+You can use the `plan` method to set recipes to a handler. The `listen` handler's method allows you attach recipe functions to specific events. The `listen` method can also be used as a decorator.
 
 ```python
 webhook_handler.plan([Hello()])
 
 webhook_handler.listen("pull_request", [very_simple_recipe])
+
+
+@webhook_handler.listen("pull_request")
+def another_simple_recipe(payload: Payload) -> None:
+    print(f"Hello from: {payload['repository']}")
 ```
 
 ### Webhook router

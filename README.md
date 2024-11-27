@@ -79,6 +79,8 @@ To define a `Recipe` (or `GithubRecipe`), simply add `events` property that retu
 
 To use a `GithubRecipe`, a `Github` instance from [PyGithub](https://github.com/PyGithub/PyGithub) is required when instantiating the class.
 
+You can also use raw functions, although this is not the best solution.
+
 ```python
 from collections.abc import Callable
 
@@ -105,6 +107,10 @@ class MyGithubRecipe(GithubRecipe):
         gh = GithubHelper(self.github, repo_fullname=payload["repository"]["full_name"])
         if not gh.rate_status.too_low():
             print(f"Hello from {gh.repo.full_name}!")
+
+
+def very_simple_recipe(payload: Payload) -> None:
+    print(f"Hello from: {payload['repository']}")
 ```
 
 #### Available recipes
@@ -125,11 +131,17 @@ signature_verification = SignatureVerificationSHA256(secret="mysecret")
 webhook_handler = GithubWebhookHandler(signature_verification)
 ```
 
-You need to use the `listen` handler's method to attach recipes to specific events.
+You can use the `plan` method to set recipes to a handler. The `listen` handler's method allows you attach recipe functions to specific events. The `listen` method can also be used as a decorator.
 
 ```python
-webhook_handler.listen("push", [Hello(github)])
-webhook_handler.listen("pull_request", [MyGithubRecipe(github)])
+webhook_handler.plan([Hello()])
+
+webhook_handler.listen("pull_request", [very_simple_recipe])
+
+
+@webhook_handler.listen("pull_request")
+def another_simple_recipe(payload: Payload) -> None:
+    print(f"Hello from: {payload['repository']}")
 ```
 
 ### Webhook router

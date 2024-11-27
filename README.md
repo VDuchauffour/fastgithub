@@ -75,9 +75,9 @@ FastGitHub usually involves 3 steps to handle GitHub webhooks:
 
 ### Recipes
 
-To define a `Recipe` (or `GithubRecipe`), simply add `events` property that returns a `dict` with the events as keys and their methods to execute. Use `*` to trigger the recipe on any events.
+To define a `Recipe` (or `GithubRecipe`), simply add `events` property that returns a `dict` with the events as keys and their methods to execute. Use `*` to trigger the recipe on any events. When a recipe is expected to fail, use a `raise` exception, so that the handler can return an error to the FastAPI application.
 
-To use a `GithubRecipe`, a `Github` instance from [PyGithub](https://github.com/PyGithub/PyGithub) is required when instantiating the class.
+To use a `GithubRecipe`, a `Github` instance from [PyGithub](https://github.com/PyGithub/PyGithub) is required when instantiating the class. A `GithubHelper` exists to help you to work with a GitHub repository.
 
 You can also use raw functions, although this is not the best solution.
 

@@ -322,7 +322,7 @@ standard = [
 
 [[package]]
 name = "fastgithub"
-version = "0.0.4"
+version = "0.0.6.dev0+ga18f27f.d20241127"
 source = { editable = "." }
 dependencies = [
     { name = "fastapi", extra = ["standard"] },
@@ -343,7 +343,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "fastapi", extras = ["standard", "standard"], specifier = ">=0.115.5" },
+    { name = "fastapi", extras = ["standard"], specifier = ">=0.115.5" },
     { name = "pydantic", specifier = ">=2.9.2" },
     { name = "pygithub", specifier = ">=2.5.0" },
 ]

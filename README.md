@@ -75,9 +75,9 @@ FastGitHub usually involves 3 steps to handle GitHub webhooks:
 
 ### Recipes
 
-To define a `Recipe` (or `GithubRecipe`), simply add `events` property that returns a `dict` with the events as keys and their methods to execute. Use `*` to trigger the recipe on any events.
+To define a `Recipe` (or `GithubRecipe`), simply add `events` property that returns a `dict` with the events as keys and their methods to execute. Use `*` to trigger the recipe on any events. When a recipe is expected to fail, use a `raise` exception, so that the handler can return an error to the FastAPI application.
 
-To use a `GithubRecipe`, a `Github` instance from [PyGithub](https://github.com/PyGithub/PyGithub) is required when instantiating the class.
+To use a `GithubRecipe`, a `Github` instance from [PyGithub](https://github.com/PyGithub/PyGithub) is required when instantiating the class. A `GithubHelper` exists to help you to work with a GitHub repository.
 
 You can also use raw functions, although this is not the best solution.
 
@@ -105,8 +105,9 @@ class MyGithubRecipe(GithubRecipe):
 
     def __call__(self, payload: Payload):
         gh = GithubHelper(self.github, repo_fullname=payload["repository"]["full_name"])
-        if not gh.rate_status.too_low():
-            print(f"Hello from {gh.repo.full_name}!")
+        gh.raise_for_rate_excess()
+
+        print(f"Hello from {gh.repo.full_name}!")
 
 
 def very_simple_recipe(payload: Payload) -> None:

@@ -21,18 +21,19 @@ class AutoCreatePullRequest(GithubRecipe):
         as_draft: bool = False,
     ):
         gh = GithubHelper(self.github, repo_fullname=payload["repository"]["full_name"])
-        if not gh.rate_status.too_low():
-            base_branch = base_branch or gh.repo.default_branch
-            head_branch = payload["ref"]
-            _title = title or gh.repo.get_commits(sha=head_branch)[0].commit.message
-            try:
-                gh.repo.create_pull(
-                    base=base_branch,
-                    head=head_branch,
-                    title=_title,
-                    body=body,
-                    draft=as_draft,
-                )
-            except GithubException as ex:
-                if ex.status != 422:
-                    raise ex
+        gh.raise_for_rate_excess()
+
+        base_branch = base_branch or gh.repo.default_branch
+        head_branch = payload["ref"]
+        _title = title or gh.repo.get_commits(sha=head_branch)[0].commit.message
+        try:
+            gh.repo.create_pull(
+                base=base_branch,
+                head=head_branch,
+                title=_title,
+                body=body,
+                draft=as_draft,
+            )
+        except GithubException as ex:
+            if ex.status != 422:
+                raise ex

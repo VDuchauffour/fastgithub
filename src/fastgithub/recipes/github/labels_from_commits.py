@@ -23,7 +23,8 @@ class LabelsFromCommits(GithubRecipe):
         labels_config: dict[str, list[str]] = LABEL_CONFIG,
     ):
         gh = GithubHelper(self.github, payload["repository"]["full_name"])
-        if not gh.rate_status.too_low():
-            pr = gh.repo.get_pull(payload["number"])
-            if labels := gh.extract_labels_from_pr(pr, labels_config):
-                gh.add_labels_to_pr(pr, labels)
+        gh.raise_for_rate_excess()
+
+        pr = gh.repo.get_pull(payload["number"])
+        if labels := gh.extract_labels_from_pr(pr, labels_config):
+            gh.add_labels_to_pr(pr, labels)

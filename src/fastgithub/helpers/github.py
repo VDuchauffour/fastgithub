@@ -1,7 +1,6 @@
-from datetime import datetime
-
-from github import Github
+from github import Github, RateLimitExceededException
 from github.PullRequest import PullRequest
+from github.RateLimit import RateLimit
 
 
 class RateStatus:
@@ -10,31 +9,23 @@ class RateStatus:
     def __init__(self, github: Github, threshold: float = 0.5) -> None:
         self._github = github
         self.threshold = threshold
+        self.status: RateLimit | None = None
 
     @property
     def github(self) -> Github:
         return self._github
 
-    def __str__(self):
-        return (
-            f"Rate Limit: {self.limit}, Rate Remaining: {self.remaining}, Rate Reset: {self.reset}"
-        )
+    def reset(self) -> None:
+        self.status = None
 
-    @property
-    def remaining(self) -> float:
-        return self.github.get_rate_limit().core.remaining
-
-    @property
-    def limit(self) -> float:
-        return self.github.get_rate_limit().core.limit
-
-    @property
-    def reset(self) -> datetime:
-        return self.github.get_rate_limit().core.reset
+    def update(self) -> RateLimit:
+        self.status = self.github.get_rate_limit()
+        return self.status
 
     def available(self) -> float:
         """Return the available percent of the rate limit."""
-        return self.remaining / self.limit if self.limit > 0 else 0.0
+        status = self.update()
+        return status.core.remaining / status.core.limit if status.core.limit > 0 else 0.0
 
     def too_low(self) -> bool:
         """Return if the rate limit is too short."""
@@ -54,6 +45,16 @@ class GithubHelper:
     @property
     def rate_status(self) -> RateStatus:
         return self._rate_status
+
+    def raise_for_rate_excess(self) -> None:
+        if self.rate_status.too_low():
+            status = self.rate_status.status
+            assert isinstance(status, RateLimit)  # noqa: S101
+            raise RateLimitExceededException(
+                429,
+                status.core.raw_data,
+                status.core.raw_headers,  # type: ignore
+            )
 
     @staticmethod
     def extract_labels_from_pr(pr: PullRequest, labels_config: dict[str, list[str]]) -> set[str]:

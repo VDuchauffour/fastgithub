@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [project]
@@ -22,16 +22,12 @@ authors = [
   { name = "Vincent Duchauffour", email = "vincent.duchauffour@proton.me" },
 ]
 requires-python = ">=3.12"
-version = "0.0.5"
+dynamic = ["version"]
 dependencies = [
   "fastapi[standard,standard]>=0.115.5",
   "pydantic>=2.9.2",
   "pygithub>=2.5.0",
 ]
-
-[project.urls]
-Homepage = "https://github.com/VDuchauffour/fastgithub"
-Documentation = "https://github.com/VDuchauffour/fastgithub"
 
 [dependency-groups]
 dev = [
@@ -43,6 +39,19 @@ dev = [
   "pytest-cov>=6.0.0",
   "ruff>=0.7.4",
 ]
+
+[project.urls]
+Homepage = "https://github.com/VDuchauffour/fastgithub"
+Documentation = "https://github.com/VDuchauffour/fastgithub"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/fastgithub/_version.py"
+
+[tool.uv]
+cache-keys = [{ git = { commit = true, tags = true } }]
 
 [tool.ruff]
 extend-exclude = ["setup.py"]

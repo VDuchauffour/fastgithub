@@ -16,7 +16,7 @@ webhook_handler.plan([AutoCreatePullRequest(github), LabelsFromCommits(github)])
 
 
 app = FastAPI()
-router = webhook_router(handler=webhook_handler, path="/postreceive")
+router = webhook_router(handler=webhook_handler, path="/post-receive")
 app.include_router(router)
 
 if __name__ == "__main__":

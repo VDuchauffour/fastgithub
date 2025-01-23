@@ -1,0 +1,40 @@
+services:
+  app:
+    build:
+      dockerfile: ./Dockerfile
+    restart: always
+    ports:
+      - 8000:8000
+    network_mode: host
+    volumes:
+      - ./src:/opt/app/src:z
+      - ./examples:/opt/app/examples:z
+      - ./tests:/opt/app/tests:z
+    environment:
+      - GITHUB_TOKEN=$GITHUB_TOKEN
+    # taken from https://docs.astral.sh/uv/guides/integration/docker/#configuring-watch-with-docker-compose
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /opt/app
+          ignore:
+            - .venv/
+        - action: rebuild
+          path: ./pyproject.toml
+  smee:
+    build:
+      dockerfile: ./Dockerfile.smee
+    depends_on:
+      - app
+    restart: always
+    ports:
+      - 3000:3000
+    network_mode: host
+    command:
+      - --url
+      - ${WEBHOOK_PROXY_URL}
+      - --path
+      - /post-receive
+      - --port
+      - '8000'

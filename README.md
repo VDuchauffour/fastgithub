@@ -177,6 +177,12 @@ To ensure that you follow the development workflow, please setup the pre-commit 
 uv run pre-commit install
 ```
 
+To test the webhook handler, use the `compose.yaml` file with the following command:
+
+```shell
+WEBHOOK_PROXY_URL=https://smee.io/XXX docker compose up
+```
+
 ## Acknowledgements
 
 - Initial ideas and designs were inspired by [python-github-webhook](https://github.com/bloomberg/python-github-webhook) and [python-github-bot-api](https://github.com/NiklasRosenstein/python-github-bot-api/).

@@ -116,8 +116,8 @@ def very_simple_recipe(payload: Payload) -> None:
 
 #### Available recipes
 
-- `AutoCreatePullRequest`: create a PR when a new branch is pushed.
-- `LabelsFromCommits`: add label to a PR using commit messages (a default config is provided).
+- `AutoCreatePullRequest` create a PR when a new branch is pushed.
+- `LabelsFromCommits` add label to a PR using commit messages (a default config is provided).
 
 GitHub recipes can be imported from `fastgithub.recipes.github`.
 

@@ -1,3 +1,5 @@
+import re
+
 import github
 import github.Label
 from github import Github, RateLimitExceededException
@@ -44,6 +46,8 @@ class RateStatus:
 
 
 class GithubHelper:
+    LABEL_REGEX = re.compile(r"#([a-z][a-z1-9-]+)([^a-z1-9-]|$)")
+
     def __init__(self, github: Github, repo_fullname: str, rate_threshold: float = 0.5) -> None:
         self._github = github
         self._rate_status = RateStatus(github, rate_threshold)
@@ -82,17 +86,35 @@ class GithubHelper:
             )
         return label
 
+    @staticmethod
+    def validate_label_name(name: str, pattern: re.Pattern) -> None:
+        """Validate the name of a label given a regex pattern."""
+        if not pattern.fullmatch(name):
+            raise ValueError(
+                f"The pattern `{name}` don't follow the regex {GithubHelper.LABEL_REGEX.pattern}!"
+            )
+
+    def extract_labels_from_commit(
+        self, message: str, labels_config: dict[str, list[Label]]
+    ) -> set[str]:
+        """Extract labels from a commit message and create labels in the repo if needed."""
+        labels = set()
+        for pattern, labels_ in labels_config.items():
+            self.__class__.validate_label_name(pattern, GithubHelper.LABEL_REGEX)
+            if pattern in message:
+                for label_ in labels_:
+                    label_ = self._get_or_create_label(**label_.model_dump())
+                    labels.update([label_.name])
+        return labels
+
     def extract_labels_from_pr(
         self, pr: PullRequest, labels_config: dict[str, list[Label]]
     ) -> set[str]:
+        """Extract labels from a PR and create labels in the repo if needed."""
         labels = set()
         commit_messages = [c.commit.message for c in pr.get_commits()]
         for message in commit_messages:
-            for pattern, labels_ in labels_config.items():
-                if pattern in message:
-                    for label_ in labels_:
-                        label_ = self._get_or_create_label(**label_.model_dump())
-                        labels.update(label_.name)
+            labels = labels.union(self.extract_labels_from_commit(message, labels_config))
         return labels
 
     @staticmethod

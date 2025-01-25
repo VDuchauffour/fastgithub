@@ -322,7 +322,6 @@ standard = [
 
 [[package]]
 name = "fastgithub"
-version = "0.0.6.dev9+ge7afe76"
 source = { editable = "." }
 dependencies = [
     { name = "fastapi", extra = ["standard"] },

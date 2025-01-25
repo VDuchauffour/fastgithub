@@ -12,6 +12,13 @@ services:
       - ./tests:/opt/app/tests:z
     environment:
       - GITHUB_TOKEN=$GITHUB_TOKEN
+    entrypoint:
+      - uv
+      - run
+      - fastapi
+      - dev
+      - examples/github_app.py
+      - --reload
     # taken from https://docs.astral.sh/uv/guides/integration/docker/#configuring-watch-with-docker-compose
     develop:
       watch:

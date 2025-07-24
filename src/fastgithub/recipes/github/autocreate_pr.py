@@ -18,7 +18,7 @@ class AutoCreatePullRequest(GithubRecipe):
         base_branch: str | None = None,
         title: str | None = None,
         body: str = "Created by FastGitHub",
-        as_draft: bool = False,
+        as_draft: bool = True,
     ):
         gh = GithubHelper(self.github, repo_fullname=payload["repository"]["full_name"])
         gh.raise_for_rate_excess()

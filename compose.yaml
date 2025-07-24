@@ -5,7 +5,6 @@ services:
     restart: always
     ports:
       - 8000:8000
-    network_mode: host
     volumes:
       - ./src:/opt/app/src:z
       - ./examples:/opt/app/examples:z
@@ -37,11 +36,12 @@ services:
     restart: always
     ports:
       - 3000:3000
-    network_mode: host
+    environment:
+      - WEBHOOK_PROXY_URL=$WEBHOOK_PROXY_URL
     command:
       - --url
-      - ${WEBHOOK_PROXY_URL}
+      - $WEBHOOK_PROXY_URL
       - --path
       - /post-receive
       - --port
-      - '8000'
+      - "8000"

@@ -99,9 +99,6 @@ max-doc-length = 99
 [tool.ruff.lint.pydocstyle]
 convention = "google"
 
-[tool.ruff.lint.isort]
-known-first-party = ["stonal_*", "stonal_*.*"]
-
 [tool.ruff.format]
 docstring-code-format = true
 preview = true

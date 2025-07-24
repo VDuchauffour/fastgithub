@@ -14,12 +14,12 @@ def secret() -> str:
 
 
 @pytest.fixture
-def signature_sha256(payload, secret) -> str:
+def signature_sha256(payload: bytes, secret: str) -> str:
     digest = hmac.new(secret.encode(), payload, "sha256").hexdigest()
     return f"sha256={digest}"
 
 
 @pytest.fixture
-def signature_sha1(payload, secret) -> str:
+def signature_sha1(payload: bytes, secret: str) -> str:
     digest = hmac.new(secret.encode(), payload, "sha1").hexdigest()
     return f"sha1={digest}"

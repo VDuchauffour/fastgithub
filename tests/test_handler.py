@@ -11,17 +11,19 @@ def webhook_handler() -> GithubWebhookHandler:
     return GithubWebhookHandler(signature_verification=None)
 
 
-def test_safe_mode_if_signature_verification_is_provided(secret):
+def test_safe_mode_if_signature_verification_is_provided(secret: str):
     signature_verification = SignatureVerificationSHA256(secret)
     webhook_handler = GithubWebhookHandler(signature_verification)
     assert webhook_handler.safe_mode is True
 
 
-def test_safe_mode_if_signature_verification_is_not_provided(webhook_handler):
+def test_safe_mode_if_signature_verification_is_not_provided(
+    webhook_handler: GithubWebhookHandler,
+):
     assert webhook_handler.safe_mode is False
 
 
-def test_recipes_is_append_with_listen_method(webhook_handler):
+def test_recipes_is_append_with_listen_method(webhook_handler: GithubWebhookHandler):
     def foo(payload: Payload) -> None:
         pass
 
@@ -31,7 +33,7 @@ def test_recipes_is_append_with_listen_method(webhook_handler):
     assert len(webhook_handler.webhooks["push"]) == 1
 
 
-def test_recipes_is_append_with_listen_method_as_decorator(webhook_handler):
+def test_recipes_is_append_with_listen_method_as_decorator(webhook_handler: GithubWebhookHandler):
     @webhook_handler.listen("push")
     def foo(payload: Payload) -> None:
         pass
@@ -40,7 +42,7 @@ def test_recipes_is_append_with_listen_method_as_decorator(webhook_handler):
     assert len(webhook_handler.recipes) == 1
 
 
-def test_recipes_is_append_with_plan_method(webhook_handler):
+def test_recipes_is_append_with_plan_method(webhook_handler: GithubWebhookHandler):
     class Foo(Recipe):
         @property
         def events(self) -> dict[str, Callable]:
@@ -64,7 +66,7 @@ def test_recipes_is_append_with_plan_method(webhook_handler):
     assert len(webhook_handler.recipes) == 2
 
 
-def test_triggered_event_match_recipe_event_definitions(webhook_handler):
+def test_triggered_event_match_recipe_event_definitions(webhook_handler: GithubWebhookHandler):
     class Foo(Recipe):
         @property
         def events(self) -> dict[str, Callable]:
@@ -85,7 +87,7 @@ def test_triggered_event_match_recipe_event_definitions(webhook_handler):
 
 
 @pytest.mark.asyncio
-async def test_process_event_return_right_value(webhook_handler):
+async def test_process_event_return_right_value(webhook_handler: GithubWebhookHandler):
     class Foo(Recipe):
         @property
         def events(self) -> dict[str, Callable]:
@@ -109,7 +111,9 @@ async def test_process_event_return_right_value(webhook_handler):
 
 
 @pytest.mark.asyncio
-async def test_process_event_filtering_match_correct_events_with_listen_method(webhook_handler):
+async def test_process_event_filtering_match_correct_events_with_listen_method(
+    webhook_handler: GithubWebhookHandler,
+):
     def foo(payload: Payload):
         pass
 
@@ -139,7 +143,9 @@ async def test_process_event_filtering_match_correct_events_with_listen_method(w
 
 
 @pytest.mark.asyncio
-async def test_process_event_filtering_match_correct_events_with_plan_method(webhook_handler):
+async def test_process_event_filtering_match_correct_events_with_plan_method(
+    webhook_handler: GithubWebhookHandler,
+):
     class Foo(Recipe):
         @property
         def events(self) -> dict[str, Callable]:

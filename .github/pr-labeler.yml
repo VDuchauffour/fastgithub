@@ -22,3 +22,7 @@ dependencies:
   - update-*
   - bump/*
   - bump-*
+  - deps/*
+  - deps-*
+  - dep/*
+  - dep-*

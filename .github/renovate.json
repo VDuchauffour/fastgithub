@@ -5,7 +5,6 @@
   "timezone": "Europe/Paris",
   "branchPrefix": "renovate/",
   "branchTopic": "update-dependencies",
-  "commitMessage": "update dependencies",
   "rebaseWhen": "behind-base-branch",
   "recreateClosed": true,
   "pre-commit": {

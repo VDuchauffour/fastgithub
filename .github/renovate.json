@@ -1,20 +1,20 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:base"],
   "dependencyDashboard": true,
-  "enabledManagers": ["regex", "pre-commit"],
-  "regexManagers": [
-    {
-      "fileMatch": ["^pyproject\\.toml$"],
-      "matchStrings": [
-        "^\\s*(?P<depName>[a-zA-Z0-9_-]+)\\s*=\\s*\"(?P<currentValue>[^\\\"]+)\""
-      ],
-      "datasourceTemplate": "pypi",
-      "versioningTemplate": "pep440"
-    }
-  ],
+  "timezone": "Europe/Paris",
+  "branchPrefix": "renovate/",
+  "branchTopic": "update-dependencies",
+  "commitMessage": "update dependencies",
+  "rebaseWhen": "behind-base-branch",
+  "recreateClosed": true,
+  "pre-commit": {
+    "enabled": true,
+    "automerge": true
+  },
   "packageRules": [
     {
-      "matchManagers": ["regex", "pre-commit"],
+      "matchManagers": ["pep621"],
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
     }

@@ -18,6 +18,10 @@ chore:
   - chore/*
   - chore-*
 dependencies:
+  - dependencies/*
+  - dependencies-*
+  - renovate/*
+  - renovate-*
   - update/*
   - update-*
   - bump/*

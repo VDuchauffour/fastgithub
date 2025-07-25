@@ -1,0 +1,22 @@
+{
+  "extends": ["config:base"],
+  "dependencyDashboard": true,
+  "enabledManagers": ["regex", "pre-commit"],
+  "regexManagers": [
+    {
+      "fileMatch": ["^pyproject\\.toml$"],
+      "matchStrings": [
+        "^\\s*(?P<depName>[a-zA-Z0-9_-]+)\\s*=\\s*\"(?P<currentValue>[^\\\"]+)\""
+      ],
+      "datasourceTemplate": "pypi",
+      "versioningTemplate": "pep440"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchManagers": ["regex", "pre-commit"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    }
+  ]
+}

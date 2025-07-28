@@ -4,9 +4,8 @@
   "dependencyDashboard": false,
   "timezone": "Europe/Paris",
   "recreateClosed": true,
-  "pre-commit": {
-    "enabled": true,
-    "automerge": true
+  "lockFileMaintenance": {
+    "enabled": true
   },
   "packageRules": [
     {

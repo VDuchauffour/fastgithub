@@ -1,11 +1,20 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base"],
   "dependencyDashboard": false,
   "timezone": "Europe/Paris",
   "recreateClosed": true,
   "lockFileMaintenance": {
     "enabled": true
   },
+  "enabledManagers": [
+    "pep621",
+    "github-actions",
+    "dockerfile",
+    "pre-commit",
+    "pyenv",
+    "docker-compose"
+  ],
   "packageRules": [
     {
       "matchManagers": ["pep621"],

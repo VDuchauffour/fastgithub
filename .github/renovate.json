@@ -1,11 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:base"],
-  "dependencyDashboard": true,
+  "dependencyDashboard": false,
   "timezone": "Europe/Paris",
-  "branchPrefix": "renovate/",
-  "branchTopic": "update-dependencies",
-  "rebaseWhen": "behind-base-branch",
   "recreateClosed": true,
   "pre-commit": {
     "enabled": true,

@@ -29,8 +29,7 @@ services:
         - action: rebuild
           path: ./pyproject.toml
   smee:
-    build:
-      dockerfile: ./Dockerfile.smee
+    image: vduchauffour/smee-client:latest
     depends_on:
       - app
     restart: always
@@ -44,4 +43,4 @@ services:
       - --path
       - /post-receive
       - --port
-      - "8000"
+      - '8000'

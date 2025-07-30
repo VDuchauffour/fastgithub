@@ -8,7 +8,6 @@
     "enabled": true
   },
   "enabledManagers": [
-    "pep621",
     "github-actions",
     "dockerfile",
     "pre-commit",

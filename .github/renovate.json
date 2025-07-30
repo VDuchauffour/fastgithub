@@ -12,7 +12,6 @@
     "github-actions",
     "dockerfile",
     "pre-commit",
-    "pyenv",
     "docker-compose"
   ],
   "packageRules": [
@@ -33,11 +32,6 @@
     },
     {
       "matchManagers": ["pre-commit"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "automerge": true
-    },
-    {
-      "matchManagers": ["pyenv"],
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
     },

@@ -347,7 +347,7 @@ dev = [
 requires-dist = [
     { name = "fastapi", extras = ["standard"], specifier = ">=0.115.5" },
     { name = "pydantic", specifier = ">=2.9.2" },
-    { name = "pygithub" },
+    { name = "pygithub", specifier = ">=2.6.1" },
 ]
 
 [package.metadata.requires-dev]

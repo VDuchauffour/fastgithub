@@ -5,8 +5,9 @@
   "timezone": "Europe/Paris",
   "recreateClosed": true,
   "lockFileMaintenance": {
-    "enabled": false
+    "enabled": true
   },
+  "updateLockFiles": true,
   "enabledManagers": [
     "pep621",
     "github-actions",

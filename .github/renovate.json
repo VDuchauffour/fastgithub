@@ -5,7 +5,7 @@
   "timezone": "Europe/Paris",
   "recreateClosed": true,
   "lockFileMaintenance": {
-    "enabled": true
+    "enabled": false
   },
   "enabledManagers": [
     "pep621",

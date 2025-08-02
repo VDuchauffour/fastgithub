@@ -16,6 +16,13 @@
   ],
   "packageRules": [
     {
+      "matchDatasources": ["pypi"],
+      "matchPackageNames": ["fastapi"],
+      "versioning": "pep440",
+      "semanticCommits": true,
+      "automerge": true
+    },
+    {
       "matchManagers": ["pep621"],
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true

@@ -18,15 +18,24 @@
   "packageRules": [
     {
       "matchDatasources": ["pypi"],
-      "matchPackageNames": ["fastapi"],
+      "matchPackageNames": ["fastapi", "ruff"],
       "versioning": "pep440",
       "semanticCommits": true,
-      "automerge": true
+      "automerge": true,
+      "rangeStrategy": "bump"
     },
     {
       "matchManagers": ["pep621"],
       "matchUpdateTypes": ["minor", "patch"],
+      "rangeStrategy": "update-lockfile",
       "automerge": true
+    },
+    {
+      "matchManagers": ["pep621"],
+      "matchDatasources": ["pypi"],
+      "matchUpdateTypes": ["major"],
+      "rangeStrategy": "replace",
+      "automerge": false
     },
     {
       "matchManagers": ["github-actions"],

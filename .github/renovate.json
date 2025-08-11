@@ -6,7 +6,7 @@
   "recreateClosed": true,
   "baseBranchPatterns": ["main", "fix/renovate-test"],
   "lockFileMaintenance": {
-    "enabled": true
+    "enabled": false
   },
   "updateLockFiles": true,
   "enabledManagers": [
@@ -28,14 +28,14 @@
     {
       "matchManagers": ["pep621"],
       "matchUpdateTypes": ["minor", "patch"],
-      "rangeStrategy": "update-lockfile",
+      "rangeStrategy": "auto",
       "automerge": true
     },
     {
       "matchManagers": ["pep621"],
       "matchDatasources": ["pypi"],
       "matchUpdateTypes": ["major"],
-      "rangeStrategy": "replace",
+      "rangeStrategy": "auto",
       "automerge": false
     },
     {

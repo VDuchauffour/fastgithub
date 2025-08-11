@@ -21,7 +21,7 @@
       "matchDatasources": ["pypi"],
       "matchPackageNames": ["ruff"],
       "matchCurrentVersion": "/^0\\./",
-      "matchUpdateTypes": ["major"],
+      "matchUpdateTypes": ["major", "minor", "patch"],
       "automerge": true
     },
     {

@@ -18,6 +18,12 @@
   ],
   "packageRules": [
     {
+      "matchDatasources": ["pypi"],
+      "matchPackageNames": ["ruff"],
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "automerge": true
+    },
+    {
       "matchManagers": ["pep621"],
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
@@ -27,12 +33,6 @@
       "matchDatasources": ["pypi"],
       "matchUpdateTypes": ["major"],
       "automerge": false
-    },
-    {
-      "matchDatasources": ["pypi"],
-      "matchPackageNames": ["ruff"],
-      "matchUpdateTypes": ["major", "minor", "patch"],
-      "automerge": true
     },
     {
       "matchManagers": ["github-actions"],

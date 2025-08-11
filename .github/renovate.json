@@ -31,7 +31,7 @@
     {
       "matchDatasources": ["pypi"],
       "matchPackageNames": ["ruff"],
-      "rangeStrategy": "bump",
+      "matchUpdateTypes": ["major", "minor", "patch"],
       "automerge": true
     },
     {

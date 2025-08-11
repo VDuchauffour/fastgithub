@@ -22,8 +22,15 @@
   ],
   "packageRules": [
     {
+      "matchPackageNames": ["ruff", "astral-sh/ruff-pre-commit"],
+      "matchCurrentVersion": "/^0\\./",
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "automerge": true,
+      "groupName": "ruff"
+    },
+    {
+      "matchPackageNames": ["fastapi"],
       "matchDatasources": ["pypi"],
-      "matchPackageNames": ["ruff", "fastapi"],
       "matchCurrentVersion": "/^0\\./",
       "matchUpdateTypes": ["major", "minor", "patch"],
       "automerge": true

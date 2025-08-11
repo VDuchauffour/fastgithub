@@ -4,7 +4,7 @@ import github
 import github.Label
 from github import Github, RateLimitExceededException
 from github.PullRequest import PullRequest
-from github.RateLimit import RateLimit
+from github.RateLimitOverview import RateLimitOverview
 from pydantic import BaseModel
 
 
@@ -22,7 +22,7 @@ class RateStatus:
     def __init__(self, github: Github, threshold: float = 0.5) -> None:
         self._github = github
         self.threshold = threshold
-        self.status: RateLimit | None = None
+        self.status: RateLimitOverview | None = None
 
     @property
     def github(self) -> Github:
@@ -31,14 +31,18 @@ class RateStatus:
     def reset(self) -> None:
         self.status = None
 
-    def update(self) -> RateLimit:
+    def update(self) -> RateLimitOverview:
         self.status = self.github.get_rate_limit()
         return self.status
 
     def available(self) -> float:
         """Return the available percent of the rate limit."""
         status = self.update()
-        return status.core.remaining / status.core.limit if status.core.limit > 0 else 0.0
+        return (
+            status.resources.core.remaining / status.resources.core.limit
+            if status.resources.core.limit > 0
+            else 0.0
+        )
 
     def too_low(self) -> bool:
         """Return if the rate limit is too short."""
@@ -59,11 +63,11 @@ class GithubHelper:
 
     def raise_for_rate_excess(self) -> None:
         if self.rate_status.too_low():
-            status: RateLimit = self.rate_status.status  # type: ignore
+            status: RateLimitOverview = self.rate_status.status  # type: ignore
             raise RateLimitExceededException(
                 429,
-                status.core.raw_data,
-                status.core.raw_headers,  # type: ignore
+                status.resources.core.raw_data,
+                status.resources.core.raw_headers,  # type: ignore
             )
 
     def _get_or_create_label(

@@ -25,14 +25,14 @@
     {
       "matchManagers": ["pep621"],
       "matchDatasources": ["pypi"],
-      "matchUpdateTypes": ["major"],
-      "automerge": false
+      "matchPackageNames": ["fastapi", "ruff"],
+      "rangeStrategy": "bump"
     },
     {
+      "matchManagers": ["pep621"],
       "matchDatasources": ["pypi"],
-      "matchPackageNames": ["fastapi", "ruff"],
-      "matchCurrentVersion": "/^0\\./",
-      "automerge": true
+      "matchUpdateTypes": ["major"],
+      "automerge": false
     },
     {
       "matchManagers": ["github-actions"],

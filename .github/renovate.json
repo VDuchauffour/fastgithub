@@ -28,14 +28,12 @@
     {
       "matchManagers": ["pep621"],
       "matchUpdateTypes": ["minor", "patch"],
-      "rangeStrategy": "auto",
       "automerge": true
     },
     {
       "matchManagers": ["pep621"],
       "matchDatasources": ["pypi"],
       "matchUpdateTypes": ["major"],
-      "rangeStrategy": "auto",
       "automerge": false
     },
     {

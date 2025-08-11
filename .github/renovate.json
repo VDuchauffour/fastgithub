@@ -67,9 +67,6 @@
       "automerge": true
     }
   ],
-  "regex": {
-    "enabled": true
-  },
   "customManagers": [
     {
       "customType": "regex",

@@ -3,7 +3,6 @@
   "extends": ["config:recommended"],
   "dependencyDashboard": false,
   "timezone": "Europe/Paris",
-  "recreateClosed": true,
   "baseBranchPatterns": ["main", "fix/renovate-test"],
   "lockFileMaintenance": {
     "enabled": false
@@ -19,11 +18,10 @@
   "packageRules": [
     {
       "matchDatasources": ["pypi"],
-      "matchPackageNames": ["fastapi", "ruff"],
-      "versioning": "pep440",
-      "semanticCommits": true,
-      "automerge": true,
-      "rangeStrategy": "bump"
+      "matchPackageNames": ["ruff"],
+      "matchCurrentVersion": "/^0\\./",
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "automerge": true
     },
     {
       "matchManagers": ["pep621"],

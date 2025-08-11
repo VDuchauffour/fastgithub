@@ -32,7 +32,6 @@
       "matchDatasources": ["pypi"],
       "matchPackageNames": ["fastapi", "ruff"],
       "matchCurrentVersion": "/^0\\./",
-      "matchUpdateTypes": ["major"],
       "automerge": true
     },
     {

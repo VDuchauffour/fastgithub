@@ -18,7 +18,7 @@
   "packageRules": [
     {
       "matchDatasources": ["pypi"],
-      "matchPackageNames": ["ruff"],
+      "matchPackageNames": ["ruff", "fastapi"],
       "matchCurrentVersion": "/^0\\./",
       "matchUpdateTypes": ["major", "minor", "patch"],
       "automerge": true

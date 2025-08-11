@@ -4,7 +4,7 @@
   "dependencyDashboard": false,
   "timezone": "Europe/Paris",
   "recreateClosed": true,
-  "baseBranchPatterns": ["fix/renovate-test"],
+  "baseBranchPatterns": ["main", "fix/renovate-test"],
   "lockFileMaintenance": {
     "enabled": false
   },

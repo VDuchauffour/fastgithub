@@ -23,17 +23,16 @@
       "automerge": true
     },
     {
-      "matchDatasources": ["pypi"],
-      "matchPackageNames": ["fastapi", "ruff"],
-      "versioning": "pep440",
-      "semanticCommits": true,
-      "automerge": true
-    },
-    {
       "matchManagers": ["pep621"],
       "matchDatasources": ["pypi"],
       "matchUpdateTypes": ["major"],
       "automerge": false
+    },
+    {
+      "matchDatasources": ["pypi"],
+      "matchPackageNames": ["ruff"],
+      "rangeStrategy": "bump",
+      "automerge": true
     },
     {
       "matchManagers": ["github-actions"],

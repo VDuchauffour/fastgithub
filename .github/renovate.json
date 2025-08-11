@@ -18,6 +18,13 @@
   ],
   "packageRules": [
     {
+      "matchDatasources": ["pypi"],
+      "matchPackageNames": ["ruff"],
+      "matchCurrentVersion": "/^0\\./",
+      "matchUpdateTypes": ["major"],
+      "automerge": true
+    },
+    {
       "matchManagers": ["pep621"],
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
@@ -27,12 +34,6 @@
       "matchDatasources": ["pypi"],
       "matchUpdateTypes": ["major"],
       "automerge": false
-    },
-    {
-      "matchDatasources": ["pypi"],
-      "matchPackageNames": ["fastapi", "ruff"],
-      "matchCurrentVersion": "/^0\\./",
-      "automerge": true
     },
     {
       "matchManagers": ["github-actions"],

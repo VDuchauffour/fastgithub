@@ -51,19 +51,32 @@
       "automerge": true
     },
     {
-      "matchManagers": ["dockerfile"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "automerge": true
-    },
-    {
       "matchManagers": ["pre-commit"],
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
     },
     {
-      "matchManagers": ["docker-compose"],
+      "matchManagers": ["docker-compose", "dockerfile"],
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
+    },
+    {
+      "matchManagers": ["regex"],
+      "matchDatasources": ["github-releases", "github-tags"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    }
+  ],
+  "regex": {
+    "enabled": true
+  },
+  "regexManagers": [
+    {
+      "description": "see https://regex101.com/r/Bf1hmQ/1 and https://regex101.com/r/SjTpfT/1",
+      "managerFilePatterns": ["Dockerfile", "compose.yml"],
+      "matchStrings": [
+        "#.*https:\\/\\/github\\.com/(?<depName>[^\\/]+\\/[^\\/]+)\\/(?<sourceType>(releases|tags)+).*\n(?:ENV|ARG)\\s.*_VERSION[\\s|=](?<currentValue>.*)"
+      ]
     }
   ]
 }

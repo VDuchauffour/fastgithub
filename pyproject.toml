@@ -24,7 +24,7 @@ authors = [
 requires-python = ">=3.12"
 dynamic = ["version"]
 dependencies = [
-  "fastapi[standard]>=0.115.5",
+  "fastapi[standard]>=0.116.1",
   "pydantic>=2.9.2",
   "pygithub>=2.6.1",
 ]

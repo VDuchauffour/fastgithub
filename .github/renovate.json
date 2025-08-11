@@ -33,8 +33,7 @@
       "matchPackageNames": ["fastapi", "ruff"],
       "matchCurrentVersion": "/^0\\./",
       "matchUpdateTypes": ["major"],
-      "automerge": true,
-      "rangeStrategy": "bump"
+      "automerge": true
     },
     {
       "matchManagers": ["github-actions"],

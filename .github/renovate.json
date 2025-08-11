@@ -23,10 +23,11 @@
       "automerge": true
     },
     {
-      "matchManagers": ["pep621"],
       "matchDatasources": ["pypi"],
       "matchPackageNames": ["fastapi", "ruff"],
-      "rangeStrategy": "bump"
+      "versioning": "pep440",
+      "semanticCommits": true,
+      "automerge": true
     },
     {
       "matchManagers": ["pep621"],

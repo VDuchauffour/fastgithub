@@ -12,7 +12,10 @@ webhook_handler = GithubWebhookHandler(signature_verification)
 
 github = Github(auth=Auth.Token(os.environ["GITHUB_TOKEN"]))
 
-webhook_handler.plan([AutoCreatePullRequest(github), LabelsFromCommits(github)])
+webhook_handler.plan([
+    AutoCreatePullRequest(github),
+    LabelsFromCommits(github),
+])
 
 
 app = FastAPI()

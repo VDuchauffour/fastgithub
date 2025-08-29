@@ -16,7 +16,7 @@ services:
       - run
       - fastapi
       - dev
-      - examples/github_app.py
+      - scripts/github_app.py
       - --reload
     # taken from https://docs.astral.sh/uv/guides/integration/docker/#configuring-watch-with-docker-compose
     develop:

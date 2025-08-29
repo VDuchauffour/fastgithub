@@ -1,5 +1,6 @@
-FROM python:3.13-alpine
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+ARG PYTHON_VERSION=3.13
+
+FROM ghcr.io/astral-sh/uv:python${PYTHON_VERSION}-alpine
 
 EXPOSE 8000
 WORKDIR /opt/app
@@ -7,6 +8,7 @@ COPY . .
 
 RUN apk update \
     && apk add git \
+    && uv python pin $PYTHON_VERSION \
     && uv sync --frozen
 
-ENTRYPOINT [ "uv", "run", "python", "examples/github_app.py" ]
+ENTRYPOINT [ "uv", "run", "python", "scripts/github_app.py" ]

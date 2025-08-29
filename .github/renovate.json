@@ -5,7 +5,8 @@
   "timezone": "Europe/Paris",
   "baseBranchPatterns": ["main", "fix/renovate-test"],
   "lockFileMaintenance": {
-    "enabled": true
+    "enabled": true,
+    "automerge": true
   },
   "postUpdateOptions": ["lockFileMaintenance"],
   "updateLockFiles": true,

@@ -24,7 +24,7 @@ repos:
         types:
           - json
   - repo: https://github.com/lyz-code/yamlfix
-    rev: 1.17.0
+    rev: 1.18.0
     hooks:
       - id: yamlfix
     # Formatter for Toml files

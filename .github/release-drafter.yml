@@ -13,7 +13,6 @@ categories:
   - title: 🧹 Maintenance
     labels:
       - maintenance
-      - dependencies
       - refactoring
       - cosmetic
       - chore

@@ -11,7 +11,7 @@ from fastgithub.recipes.github import (
     UndraftPR,
 )
 
-signature_verification = SignatureVerificationSHA256(secret="mysecret")  # noqa: S106
+signature_verification = SignatureVerificationSHA256(secret=os.environ["GITHUB_WEBHOOK_SECRET"])  # noqa: S106
 webhook_handler = GithubWebhookHandler(signature_verification)
 
 github = Github(auth=Auth.Token(os.environ["GITHUB_TOKEN"]))

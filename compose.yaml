@@ -12,6 +12,7 @@ services:
     environment:
       - GITHUB_TOKEN=$GITHUB_TOKEN
       - GITHUB_WEBHOOK_SECRET=$GITHUB_WEBHOOK_SECRET
+      - GITHUB_WEBHOOK_PATH=$GITHUB_WEBHOOK_PATH
     entrypoint:
       - uv
       - run
@@ -19,6 +20,10 @@ services:
       - dev
       - scripts/github_app.py
       - --reload
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
     # taken from https://docs.astral.sh/uv/guides/integration/docker/#configuring-watch-with-docker-compose
     develop:
       watch:
@@ -34,14 +39,10 @@ services:
     depends_on:
       - app
     restart: always
-    ports:
-      - 3000:3000
     environment:
       - WEBHOOK_PROXY_URL=$WEBHOOK_PROXY_URL
     command:
       - --url
       - $WEBHOOK_PROXY_URL
-      - --path
-      - /post-receive
-      - --port
-      - '8000'
+      - --target
+      - http://app:8000$GITHUB_WEBHOOK_PATH

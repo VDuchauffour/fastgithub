@@ -10,7 +10,7 @@ from .helper import _inject_dependencies
 
 def webhook_router(
     handler: GithubWebhookHandler,
-    path: str = "",
+    path: str,
     dependencies: Sequence[Callable] | None = None,
     include_in_schema: bool = True,
     tags: list[str | Enum] | None = None,

@@ -19,7 +19,7 @@ webhook_handler.plan([
 
 
 app = FastAPI()
-router = webhook_router(handler=webhook_handler, path="/post-receive")
+router = webhook_router(handler=webhook_handler, path=os.environ["GITHUB_WEBHOOK_PATH"])
 app.include_router(router)
 
 if __name__ == "__main__":

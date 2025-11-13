@@ -177,10 +177,18 @@ To ensure that you follow the development workflow, please setup the pre-commit 
 uv run pre-commit install
 ```
 
-To test the webhook handler, use the `compose.yaml` file with the following command:
+### Run the application locally
+
+To test the webhook handler you need to fill an `.env` file, run:
 
 ```shell
-WEBHOOK_PROXY_URL=https://smee.io/XXX docker compose up
+cp .env.example .env
+```
+
+then run:
+
+```shell
+docker compose up
 ```
 
 ## Acknowledgements

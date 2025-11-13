@@ -33,5 +33,10 @@
     "build": true,
     "coverage.xml": true,
     "node_modules": true
+  },
+  "python.languageServer": "None",
+  "cursorpyright.analysis.diagnosticSeverityOverrides": {
+    "reportGeneralTypeIssues": "warning",
+    "reportArgumentType": "warning"
   }
 }

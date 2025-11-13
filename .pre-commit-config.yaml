@@ -40,10 +40,9 @@ repos:
         args:
           - --number
         additional_dependencies:
-          - mdformat-gfm
-          - mdformat-tables
-          - mdformat-frontmatter
-          - mdformat-black
+          # - mdformat-gfm
+          # - mdformat-tables
+          # - mdformat-frontmatter
           - mdformat-shfmt
   # An extremely fast Python linter, written in Rust
   - repo: https://github.com/astral-sh/ruff-pre-commit

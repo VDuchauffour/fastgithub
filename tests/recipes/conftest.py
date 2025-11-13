@@ -6,6 +6,7 @@ import pytest
 
 from fastgithub.helpers.github import Label
 from fastgithub.recipes.github.autocreate_pr import AutoCreatePullRequest
+from fastgithub.recipes.github.undraft_pr import UndraftPR
 
 # see https://github.com/octokit/webhooks/tree/main/payload-examples/api.github.com
 _BASE_URL_GITHUB_PAYLOAD = "https://raw.githubusercontent.com/octokit/webhooks/refs/heads/main/payload-examples/api.github.com/{event}/{action}"
@@ -103,6 +104,12 @@ def custom_labels_config():
 @pytest.fixture
 def autocreate_pr_recipe(mock_github):
     return AutoCreatePullRequest(mock_github)
+
+
+@pytest.fixture
+def undraft_pr_recipe(mock_github):
+    """Create UndraftPR instance with mocked GitHub."""
+    return UndraftPR(mock_github)
 
 
 @pytest.fixture

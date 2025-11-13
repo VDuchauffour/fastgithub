@@ -6,7 +6,8 @@
   "baseBranchPatterns": ["main", "fix/renovate-test"],
   "lockFileMaintenance": {
     "enabled": true,
-    "automerge": true
+    "automerge": true,
+    "extends": ["schedule:monthly"]
   },
   "postUpdateOptions": ["lockFileMaintenance"],
   "updateLockFiles": true,

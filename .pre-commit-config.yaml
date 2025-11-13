@@ -24,7 +24,7 @@ repos:
         types:
           - json
   - repo: https://github.com/lyz-code/yamlfix
-    rev: 1.18.0
+    rev: 1.19.0
     hooks:
       - id: yamlfix
     # Formatter for Toml files
@@ -34,7 +34,7 @@ repos:
       - id: taplo-format
   # Formatter for markdown files
   - repo: https://github.com/executablebooks/mdformat
-    rev: 0.7.22
+    rev: 1.0.0
     hooks:
       - id: mdformat
         args:
@@ -47,7 +47,7 @@ repos:
           - mdformat-shfmt
   # An extremely fast Python linter, written in Rust
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.12.12
+    rev: v0.14.4
     hooks:
       # Run the linter
       - id: ruff

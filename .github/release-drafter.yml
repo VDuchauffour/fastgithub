@@ -23,7 +23,7 @@ categories:
 change-template: '- $TITLE (#$NUMBER)'
 change-title-escapes: \<*_& # You can add  # and @ to disable mentions
 exclude-labels:
-  - dependenices
+  - dependencies
 version-resolver:
   major:
     labels:

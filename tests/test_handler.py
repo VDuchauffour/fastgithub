@@ -11,8 +11,8 @@ def webhook_handler() -> GithubWebhookHandler:
     return GithubWebhookHandler(signature_verification=None)
 
 
-def test_safe_mode_if_signature_verification_is_provided(secret: str):
-    signature_verification = SignatureVerificationSHA256(secret)
+def test_safe_mode_if_signature_verification_is_provided(signature_secret: str):
+    signature_verification = SignatureVerificationSHA256(signature_secret)
     webhook_handler = GithubWebhookHandler(signature_verification)
     assert webhook_handler.safe_mode is True
 

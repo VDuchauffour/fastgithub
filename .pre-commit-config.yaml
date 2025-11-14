@@ -46,7 +46,7 @@ repos:
           - mdformat-shfmt
   # An extremely fast Python linter, written in Rust
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.14.4
+    rev: v0.14.5
     hooks:
       # Run the linter
       - id: ruff

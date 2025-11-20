@@ -3,7 +3,7 @@
   "extends": ["config:recommended"],
   "dependencyDashboard": false,
   "timezone": "Europe/Paris",
-  "baseBranchPatterns": ["main", "fix/renovate-test"],
+  "baseBranchPatterns": ["main"],
   "lockFileMaintenance": {
     "enabled": true,
     "automerge": true,
@@ -76,8 +76,7 @@
       "managerFilePatterns": ["Dockerfile", "compose.yaml", "compose.yml"],
       "matchStrings": [
         "#.*https:\\/\\/github\\.com/(?<depName>[^\\/]+\\/[^\\/]+)\\/(?<sourceType>(releases|tags)+).*\n(?:ENV|ARG)\\s.*_VERSION[\\s|=](?<currentValue>.*)"
-      ],
-      "datasourceTemplate": "github-{{{sourceType}}}"
+      ]
     }
   ]
 }
